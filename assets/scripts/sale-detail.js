@@ -72,29 +72,8 @@ function renderItemsAmount(productAmount)
             amountIcon.innerHTML = `<p>${productAmount}</p>`;
         }    
 }
-// async function renderItems(saleDetail)
-// {
-//     counter = 0;
-//     const SALE_CONTENT = document.querySelector('.sale-detail-content')
-//     let products = saleDetail.products;
-//     for(const product of products)
-//         {
-//             console.log(product);
-//             productData = await fetchProduct(product.productId)
-//             counter += 1;
-//             let itemRow = document.createElement('section');
-//             itemRow.classList.add('item-row-content');
-//             itemRow.innerHTML = `<p>${counter}</p>
-//                 <p>${productData.name}</p>
-//                 <p>$${formatNumber(product.price)}</p>
-//                 <p>${product.discount}%</p>
-//                 <p>${product.quantity}</p>
-//                 <p>$${formatNumber(product.quantity * product.price)}</p>`;
-//             SALE_CONTENT.appendChild(itemRow);
-//         }    
-// }
 
-//CHAT CODE
+//CHAT CODE ---------------------------------------------------------------------------------------------------------
 
 async function renderItems(saleDetail) {
     let counter = 0;
@@ -131,7 +110,7 @@ function createItemRow(counter, product, productData) {
     return itemRow;
 }
 
-//CHAT CODE
+//CHAT CODE ---------------------------------------------------------------------------------------------------------
 function renderBottom(saleDetail)
 {
     const SALE_CONTENT = document.querySelector('.sale-detail-bottom');

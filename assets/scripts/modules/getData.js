@@ -12,15 +12,16 @@ const retrieveProducts  = async function (search = '%00', category = '%00', curr
     // if(currentOffset == null)
     //     {
     //         currentOffset = 0;
-    //     }
+    //     }    
     try
     {        
         const response = await fetch
-            (`http://localhost:5166/api/Product?name=${search}&category=${category}&offset=${currentOffset}&limit=12`);
+            (`https://localhost:7230/api/Product?name=${search}&category=${category}&offset=${currentOffset}&limit=12`);
         if (!response.ok) {            
             throw new Error(`HTTP error! Status: ${response.status}`);
         }                
-        const data = await response.json();                  
+        const data = await response.json();  
+        console.log(data);                
         return data;
     }
     catch

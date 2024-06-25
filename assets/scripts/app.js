@@ -4,7 +4,7 @@ import { retrieveProducts, getCookie } from "./modules/getData.js";
 let currentOffset;  
 let category;
 let search;
-const INDEX_URL = './index.html?';
+const indexUrl = './index.html?';
 //Retrieving Data
 document.addEventListener('DOMContentLoaded', () => 
     {                
@@ -13,16 +13,16 @@ document.addEventListener('DOMContentLoaded', () =>
 
 function addOnClickEvents()
 {
-    const FILTER_BUTTONS = document.querySelectorAll('.filter-button');
-    for(let button of FILTER_BUTTONS)
+    const filterButtons = document.querySelectorAll('.filter-button');
+    for(let button of filterButtons)
         {            
             button.addEventListener('click', () =>
                 {
                     filterByCategory(button.id);
                 })         
         }   
-    const SEARCH_BAR = document.querySelector('#searchBar');
-    SEARCH_BAR.addEventListener('keydown', (e) =>
+    const searchBar = document.querySelector('#searchBar');
+    searchBar.addEventListener('keydown', (e) =>
         {        
             if(e.key == 'Enter')
                 {
@@ -40,75 +40,7 @@ function renderItemsAmount(productAmount)
             amountIcon.innerHTML = `<p>${productAmount}</p>`;
         }    
 }
-// function createCards(products)
-// {    
-//     const ITEM_SECTION = document.querySelector('.item-section-content');
-//     products.forEach(product => {
-//         let newCard = document.createElement('article');
-//         newCard.classList.add("item-card");
-//         newCard.addEventListener('click', () => {openDetailProductPage(product.id)});
-//         let cardImageContainer = document.createElement('section');
-//         cardImageContainer.classList.add("image-container");
-//         let cardImage = document.createElement('img');
-//         cardImage.src = product.imageUrl;
-//         cardImageContainer.appendChild(cardImage);
-//         newCard.appendChild(cardImageContainer);
-
-//         let contentResultContainer = document.createElement('section');
-//         contentResultContainer.classList.add("content-result-container");
-
-//         let productNameContainer = document.createElement('section');
-//         productNameContainer.classList.add("name-container");
-//         let productName = document.createElement('h5');
-//         let productNameString = product.name;        
-//         if(productNameString.length > 42)
-//             {                
-//                 productNameString = productNameString.slice(0, 42);
-//                 productNameString = productNameString + '...';                
-//             }
-//         productName.innerHTML = productNameString;
-//         productNameContainer.appendChild(productName);
-//         contentResultContainer.appendChild(productNameContainer);
-
-//         let priceAndCartContainer = document.createElement('section');
-//         priceAndCartContainer.classList.add("price-and-cart-container");
-        
-//         let priceContainer = document.createElement('section');
-//         priceContainer.classList.add("price-container");
-//         let priceWithoutDiscount = document.createElement('p');
-        
-//         priceWithoutDiscount.innerHTML = "$" + formatNumber(product.price);
-//         if(product.discount > 0)
-//             {
-//                 priceWithoutDiscount.classList.add('price-without-discount');
-//                 let priceWithDiscountContainer = document.createElement('section');
-//                 priceWithDiscountContainer.classList.add('price-with-discount-container');
-//                 let priceWithDiscount = document.createElement('p');                
-//                 let actualPrice = product.price - (product.price * (product.discount / 100));
-//                 priceWithDiscount.innerHTML = "$" + formatNumber(actualPrice);
-//                 let percentageOff = document.createElement('p');
-//                 percentageOff.classList.add('percentage-off');
-//                 percentageOff.innerHTML = `${product.discount}% OFF`;
-//                 priceWithDiscountContainer.appendChild(priceWithDiscount);
-//                 priceWithDiscountContainer.appendChild(percentageOff);                
-//                 priceContainer.appendChild(priceWithoutDiscount);
-//                 priceContainer.appendChild(priceWithDiscountContainer);
-
-//             }
-//         else
-//         {
-//             priceContainer.appendChild(priceWithoutDiscount);
-//         }
-        
-//         priceAndCartContainer.appendChild(priceContainer);
-//         contentResultContainer.appendChild(priceAndCartContainer);
-
-//         newCard.appendChild(contentResultContainer);
-//         ITEM_SECTION.append(newCard);
-//     });        
-// }
-
-//CHAT CODE
+//CHAT CODE ---------------------------------------------------------------------------------------------------------
 function createCards(products) {
     const itemSection = document.querySelector('.item-section-content');
     const fragment = document.createDocumentFragment();
@@ -131,7 +63,7 @@ function createCard(product) {
             ${createPriceSection(product.price, product.discount)}
         </section>
     `;
-    newCard.addEventListener('click', () => openDetailProductPage(product.id));
+    newCard.addEventListener('click', () => openProductDetailPage(product.id));
     return newCard;
 }
 
@@ -169,35 +101,37 @@ function createPriceSection(price, discount) {
         `;
     }
 }
-//CHAT CODE
+//CHAT CODE ---------------------------------------------------------------------------------------------------------
+
 //Rendering - Paginado
 function searchProduct(search)
 {
-    let encodedUrl = encodeParams(INDEX_URL, search, category, currentOffset)
+    let encodedUrl = encodeParams(indexUrl, search, category, currentOffset)
     window.open(encodedUrl, '_self'); 
 }
 function nextPage(search = '%00')
 {        
     currentOffset = parseInt(currentOffset) + 12;         
-    let encodedUrl = encodeParams(INDEX_URL, search, category, currentOffset)
+    let encodedUrl = encodeParams(indexUrl, search, category, currentOffset)
     window.open(encodedUrl, '_self');    
 }
 function previousPage(search = '%00')
 {
     currentOffset = parseInt(currentOffset) - 12;    
-    let encodedUrl = encodeParams(INDEX_URL, search, category, currentOffset)
+    let encodedUrl = encodeParams(indexUrl, search, category, currentOffset)
     window.open(encodedUrl, '_self');
 }
 //Rendering - CardCreation
 async function createItemSection(search = '%00', category = '%00', currentOffset = 0)
 {    
+    
     let products = await retrieveProducts(search, category, currentOffset);    
     createCards(products);
 }
 //Redirectioning
-function openDetailProductPage(value)
+function openProductDetailPage(value)
 {    
-    window.open('./DetailProduct.html?value=' + encodeURIComponent(value), '_self');
+    window.open('./product_detail.html?value=' + encodeURIComponent(value), '_self');
 }
 // Functionality 
 function formatNumber(number) {
@@ -207,9 +141,9 @@ function formatNumber(number) {
     }).format(number);
 }
 function activeCategory(category)
-{
-    const FILTER_BUTTON = document.getElementById(`${category}`);
-    FILTER_BUTTON.childNodes[1].classList.toggle('active');
+{    
+    const filterButton = document.getElementById(`${category}`);
+    filterButton.childNodes[1].classList.toggle('active');
 }
 function encodeParams(url, search, category, currentOffset) {
     const searchParams = new URLSearchParams();
@@ -231,7 +165,7 @@ function decodeParams(url) {
 //Category Filter
 function filterByCategory(category, search = '%00')
 {        
-    let encodedUrl = encodeParams(INDEX_URL, search, category, currentOffset)
+    let encodedUrl = encodeParams(indexUrl, search, category, currentOffset)
     window.open(encodedUrl, '_self');    
 }
 
@@ -253,18 +187,15 @@ function initPage()
             let shoppingCart = parsedStoredUserShoppingCart;
             renderItemsAmount(shoppingCart.products.length);            
             createItemSection(searchParam, categoryParam, currentOffsetParam);    
-        }            
-    else
-    {
-        createItemSection(searchParam, categoryParam, currentOffsetParam);            
-    }
+        }                
+    createItemSection(searchParam, categoryParam, currentOffsetParam);
     addOnClickEvents();    
     createPagination();
 }
 
 function createPagination()
 {
-    const ITEM_SECTION_CONTAINER = document.querySelector('.item-section-container');
+    const itemSectionContainer = document.querySelector('.item-section-container');
     let paginationContainer = document.createElement('section');
     paginationContainer.classList.add('pagination-container');
     let pagePreviousToggle = document.createElement('button');
@@ -283,7 +214,7 @@ function createPagination()
     pageNextToggle.classList.add('page-toggle');
     pageNextToggle.innerHTML = "Siguiente";
     paginationContainer.appendChild(pageNextToggle);  
-    ITEM_SECTION_CONTAINER.appendChild(paginationContainer); 
+    itemSectionContainer.appendChild(paginationContainer); 
 }
 
 

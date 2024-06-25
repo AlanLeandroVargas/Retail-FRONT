@@ -75,92 +75,7 @@ function renderItemsAmount(productAmount)
             amountIcon.innerHTML = `<p>${productAmount}</p>`;
         }    
 }
-// async function createProductDetails()
-// {
-//     let product = await fetchProduct();
-//     let ImageContainer = document.createElement('section');
-//     ImageContainer.classList.add('image-container');
-//     let productImage = document.createElement('img');
-//     productImage.src = product.imageUrl;
-//     ImageContainer.appendChild(productImage);
-//     ITEM_SECTION.append(ImageContainer);
-
-//     let productDetailContainer = document.createElement('section');
-//     productDetailContainer.classList.add('product-detail-container');
-//     let productDetailContainerHeader = document.createElement('section');
-//     productDetailContainerHeader.classList.add('product-detail-container-header');
-//     let detailHeader = document.createElement('h2');
-//     detailHeader.innerHTML = "Descripcion";
-//     productDetailContainerHeader.appendChild(detailHeader);
-//     productDetailContainer.appendChild(productDetailContainerHeader);
-//     let productDetailContainerContent = document.createElement('section');
-//     productDetailContainerContent.classList.add('product-detail-container-content');
-//     let detail = document.createElement('h4')
-//     detail.innerHTML = product.description;
-//     productDetailContainerContent.appendChild(detail);
-//     productDetailContainer.appendChild(productDetailContainerContent);
-//     ITEM_SECTION.append(productDetailContainer)
-    
-//     let priceSectionContainer = document.createElement('section');
-//     priceSectionContainer.classList.add('price-section-container');
-
-//     // Price Header
-//     let priceSectionHeader = document.createElement('section');
-//     priceSectionHeader.classList.add('price-section-header')
-//     let productName = document.createElement('h4');
-//     productName.innerHTML = product.name;
-//     priceSectionHeader.appendChild(productName);
-//     priceSectionContainer.appendChild(priceSectionHeader);
-
-//     //Price Content
-//     let priceSectionContent = document.createElement('section');
-//     priceSectionContent.classList.add('price-section-content');
-//     let productPriceWithoutDiscount = document.createElement('p');
-//     productPriceWithoutDiscount.innerHTML = "$" + formatNumber(product.price);
-//     if(product.discount > 0)
-//         {
-//             productPriceWithoutDiscount.classList.add('price-without-discount');
-//             let priceWithDiscountContainer = document.createElement('section');
-//             priceWithDiscountContainer.classList.add('price-with-discount-container');
-//             let priceWithDiscount = document.createElement('p');                
-//             let actualPrice = product.price - (product.price * (product.discount / 100));
-//             priceWithDiscount.innerHTML = "$" + formatNumber(actualPrice);
-//             let percentageOff = document.createElement('p');
-//             percentageOff.classList.add('percentage-off');
-//             percentageOff.innerHTML = `${product.discount}% OFF`;
-//             priceWithDiscountContainer.appendChild(priceWithDiscount);
-//             priceWithDiscountContainer.appendChild(percentageOff);                
-//             priceSectionContent.appendChild(productPriceWithoutDiscount);
-//             priceSectionContent.appendChild(priceWithDiscountContainer);
-
-//         }
-//     else
-//     {
-//         priceSectionContent.appendChild(productPriceWithoutDiscount);
-//     }
-    
-//     priceSectionContainer.appendChild(priceSectionContent);
-
-//     //Price Bottom
-//     let priceSectionBottom = document.createElement('section');
-//     priceSectionBottom.classList.add('price-section-bottom');
-//     let cartBtnContainer = document.createElement('section');
-//     cartBtnContainer.classList.add('cart-btn-container');
-//     let cartBtn = document.createElement('button');
-//     cartBtn.classList.add('cart-btn');
-//     cartBtn.innerText = "Agregar al carrito"
-//     cartBtn.addEventListener('click', () => {
-//         addProduct(product.id); 
-//     })    
-//     cartBtnContainer.appendChild(cartBtn);
-//     priceSectionBottom.appendChild(cartBtnContainer);
-//     priceSectionContainer.appendChild(priceSectionBottom);
-
-//     ITEM_SECTION.append(priceSectionContainer);
-// }
-
-
-//CHAT CODE
+//CHAT CODE ---------------------------------------------------------------------------------------------------------
 async function createProductDetails() {
     try {
         const product = await fetchProduct();
@@ -277,7 +192,7 @@ function createPriceSectionBottom(productId) {
     return priceSectionBottom;
 }
 
-//CHAT CODE
+//CHAT CODE ---------------------------------------------------------------------------------------------------------
 
 
 //Functionality

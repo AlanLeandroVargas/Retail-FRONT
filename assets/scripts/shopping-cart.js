@@ -104,85 +104,7 @@ function renderItemsAmount(productAmount)
         amountIcon.style.display = 'none';
     }
 }
-// function createCards(productsAndQuantities)
-// {   
-//     const PRODUCT_LIST = document.querySelector('.product-list-section');
-//     productsAndQuantities.forEach(product => {        
-//         let newCard = document.createElement('section');
-//         newCard.classList.add('product-container');
-//         newCard.classList.add('id-' + product.product.id);
-
-//         let productContentContainer = document.createElement('section');
-//         productContentContainer.classList.add('product-content-container')        
-
-//         let productImageContainer = document.createElement('section');
-//         productImageContainer.classList.add('product-image-container');
-//         let productImage = document.createElement('img');
-//         productImage.src = product.product.imageUrl;
-//         productImageContainer.appendChild(productImage);
-//         productContentContainer.appendChild(productImageContainer);
-
-//         let productInformationContainer = document.createElement('section');
-//         productInformationContainer.classList.add('product-information-container');
-//         let productNameContainer = document.createElement('section');
-//         productNameContainer.classList.add('product-name-container');
-//         let productName = document.createElement('h3');
-//         productName.innerHTML = product.product.name;
-//         productNameContainer.appendChild(productName);
-//         productInformationContainer.appendChild(productNameContainer);
-//         let productBtnContainer = document.createElement('section');
-//         productBtnContainer.classList.add('btn-container');
-//         let productBtn = document.createElement('button');
-//         productBtn.innerHTML = "Eliminar";
-//         productBtn.addEventListener('click', () => {
-//             deleteProduct(product.product.id);
-//         })
-//         productBtnContainer.appendChild(productBtn);
-//         productInformationContainer.appendChild(productBtnContainer);
-//         let productQuantityPriceContainer = document.createElement('section');
-//         productQuantityPriceContainer.classList.add('quantity-price-container');
-//         let productQuantityContainer = document.createElement('section');
-
-//         //Quantity Section
-//         productQuantityContainer.classList.add('quantity-container')
-
-//         let increaseBtn = document.createElement('button');
-//         increaseBtn.classList.add('quantity-button');
-//         increaseBtn.innerText = "+";        
-//         increaseBtn.addEventListener('click', () => {
-//             addProduct(product.product.id)
-//         });
-
-//         let quantity = document.createElement('span');
-//         quantity.classList.add('quantity-' + product.product.id);
-//         quantity.innerHTML = product.quantity;
-//         let decreaseBtn = document.createElement('button');
-//         decreaseBtn.classList.add('quantity-button');
-//         decreaseBtn.classList.add('decrease-' + product.product.id);
-//         decreaseBtn.innerText = "-";
-//         decreaseBtn.addEventListener('click', () => {
-//             removeProduct(product.product.id);
-//         })
-//         if(product.quantity <= 1)
-//             {
-//                 decreaseBtn.disabled = true;
-//             }
-//         productQuantityContainer.appendChild(decreaseBtn);        
-//         productQuantityContainer.appendChild(quantity);
-//         productQuantityContainer.appendChild(increaseBtn);
-//         productQuantityPriceContainer.appendChild(productQuantityContainer);
-//         let price = document.createElement('h3');
-//         price.innerHTML = "$ " + formatNumber(product.product.price);
-//         productQuantityPriceContainer.appendChild(price);
-//         productInformationContainer.appendChild(productQuantityPriceContainer);
-//         productContentContainer.appendChild(productInformationContainer);
-
-//         newCard.appendChild(productContentContainer);
-//         PRODUCT_LIST.append(newCard);
-//     });
-// }
-
-//CHAT CODE
+//CHAT CODE ---------------------------------------------------------------------------------------------------------
 
 function createCards(productsAndQuantities) {
     const productList = document.querySelector('.product-list-section');
@@ -307,7 +229,7 @@ function createProductQuantityContainer(productId, quantity) {
     return productQuantityContainer;
 }
 
-//CHAT CODE
+//CHAT CODE ---------------------------------------------------------------------------------------------------------
 async function renderCards() 
 {
     let storedUserShoppingCart = getCookie('shoppingCart');
