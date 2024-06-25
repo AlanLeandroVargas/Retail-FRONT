@@ -1,4 +1,4 @@
-import { retrieveProducts, getCookie } from "./modules/getData.js";
+import { fetchProductsByFilters, getCookie } from "./modules/getData.js";
 
 //Declarations
 let currentOffset;  
@@ -54,15 +54,21 @@ function createCards(products) {
 function createCard(product) {
     const newCard = document.createElement('article');
     newCard.classList.add('item-card');
+    const imgSrc = product.imageUrl || "./img/notFound.jpg";
     newCard.innerHTML = `
         <section class="image-container">
-            <img src="${product.imageUrl}" alt="${product.name}">
+            <img src="${imgSrc}" alt="${product.name}">
         </section>
         <section class="content-result-container">
             ${createProductName(product.name)}
             ${createPriceSection(product.price, product.discount)}
         </section>
     `;
+    const imgElement = newCard.querySelector('img');
+    imgElement.onerror = function() {
+        this.onerror = null; // Prevent infinite loop in case default image is also not available
+        this.src = "./img/notFound.jpg";
+    };
     newCard.addEventListener('click', () => openProductDetailPage(product.id));
     return newCard;
 }
@@ -125,7 +131,7 @@ function previousPage(search = '%00')
 async function createItemSection(search = '%00', category = '%00', currentOffset = 0)
 {    
     
-    let products = await retrieveProducts(search, category, currentOffset);    
+    let products = await fetchProductsByFilters(search, category, currentOffset);    
     createCards(products);
 }
 //Redirectioning

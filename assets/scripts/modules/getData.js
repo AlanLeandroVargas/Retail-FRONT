@@ -1,4 +1,4 @@
-const retrieveProducts  = async function (search = '%00', category = '%00', currentOffset = 0)
+const fetchProductsByFilters  = async function (search = '%00', category = '%00', currentOffset = 0)
 {
     //You gotta fix this later
     // if(search == null)
@@ -43,10 +43,34 @@ const getQueryParams = function () {
     });
     return params;
 }
+async function fetchProductsById(parsedStoredUserShoppingCart) {    
+    let productsAndQuantities = [];
+    for(const product of parsedStoredUserShoppingCart.products)
+        {
+            try
+            {
+                const response = await fetch(`https://localhost:7230/api/Product/${product.productId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json(); 
+                productsAndQuantities.push({
+                    product: data,
+                    quantity: product.quantity
+                })
+            }
+            catch
+            {
+                console.error('Error fetching data:', error);
+            }
+        }        
+    return productsAndQuantities;
+}
 
 export 
 {
-    retrieveProducts,
+    fetchProductsByFilters,
+    fetchProductsById,
     getCookie,
     getQueryParams
 }
