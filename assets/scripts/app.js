@@ -1,5 +1,5 @@
 import { fetchProductsByFilters, getCookie } from "./modules/getData.js";
-
+//Test
 //Declarations
 let currentOffset;  
 let category;
