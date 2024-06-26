@@ -1,15 +1,40 @@
 import { fetchProductsByFilters, getCookie } from "./getData.js";
-//Test
+
 //Declarations
 let currentOffset;  
 let category;
 let search;
 const indexUrl = './?';
-//Retrieving Data
+
+
 document.addEventListener('DOMContentLoaded', () => 
     {                
         initPage();
     })
+
+    function initPage()
+    {
+        const {search: searchParam, category: categoryParam, currentOffset: currentOffsetParam} = 
+                                                                                    decodeParams(window.location.href); 
+        search = searchParam;
+        currentOffset = currentOffsetParam;  
+        category = categoryParam;      
+        if(category != '%00')
+            {
+                activeCategory(category);
+            }   
+        let storedUserShoppingCart = getCookie('shoppingCart');        
+        if(storedUserShoppingCart != undefined && storedUserShoppingCart)
+            {
+                let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
+                let shoppingCart = parsedStoredUserShoppingCart;
+                renderItemsAmount(shoppingCart.products.length);                                
+            }                
+        createItemSection(searchParam, categoryParam, currentOffsetParam);
+        addOnClickEvents();    
+        createPaginationSection();
+    }    
+
 
 function addOnClickEvents()
 {
@@ -43,6 +68,7 @@ function renderItemsAmount(productAmount)
 //CHAT CODE ---------------------------------------------------------------------------------------------------------
 function createCards(products) {
     const itemSection = document.querySelector('.item-section-content');
+    console.log(itemSection);
     const fragment = document.createDocumentFragment();
     products.forEach(product => {
         const newCard = createCard(product);
@@ -108,6 +134,32 @@ function createPriceSection(price, discount) {
     }
 }
 //CHAT CODE ---------------------------------------------------------------------------------------------------------
+function createPaginationSection()
+{
+    const itemSectionContainer = document.querySelector('.item-section-container');
+    const paginationContainer = document.createElement('section');
+    paginationContainer.classList.add('pagination-container');
+    paginationContainer.innerHTML = `
+            <button class="page-toggle" id="previous-btn">
+                Anterior
+            </button>
+            <button class="page-toggle" id="next-btn">
+                Siguiente
+            </button>
+    `;
+    itemSectionContainer.appendChild(paginationContainer);    
+    const nextBtn = document.getElementById('next-btn');
+    nextBtn.addEventListener('click', () =>
+        {
+            nextPage(search);
+        })
+    const previousBtn = document.getElementById('previous-btn');
+    previousBtn.addEventListener('click', () =>
+        {
+            previousPage(search);
+        })    
+}
+
 
 //Rendering - Paginado
 function searchProduct(search)
@@ -117,15 +169,31 @@ function searchProduct(search)
 }
 function nextPage(search = '%00')
 {        
-    currentOffset = parseInt(currentOffset) + 12;         
-    let encodedUrl = encodeParams(indexUrl, search, category, currentOffset)
-    window.open(encodedUrl, '_self');    
+    const cards = document.querySelectorAll('.item-card');
+    if(cards.length < 12)
+        {
+            alert("You cant do that");
+        }
+    else
+    {
+        currentOffset = parseInt(currentOffset) + 12;         
+        let encodedUrl = encodeParams(indexUrl, search, category, currentOffset)
+        window.open(encodedUrl, '_self');  
+    }      
 }
 function previousPage(search = '%00')
 {
-    currentOffset = parseInt(currentOffset) - 12;    
-    let encodedUrl = encodeParams(indexUrl, search, category, currentOffset)
-    window.open(encodedUrl, '_self');
+    if (currentOffset <= 0)
+        {
+            alert("You cant do that");
+        }
+    else
+    {
+        currentOffset = parseInt(currentOffset) - 12;    
+        let encodedUrl = encodeParams(indexUrl, search, category, currentOffset)
+        window.open(encodedUrl, '_self');
+    }
+    
 }
 //Rendering - CardCreation
 async function createItemSection(search = '%00', category = '%00', currentOffset = 0)
@@ -175,53 +243,7 @@ function filterByCategory(category, search = '%00')
     window.open(encodedUrl, '_self');    
 }
 
-function initPage()
-{
-    const {search: searchParam, category: categoryParam, currentOffset: currentOffsetParam} = 
-                                                                                decodeParams(window.location.href); 
-    search = searchParam;
-    currentOffset = currentOffsetParam;  
-    category = categoryParam;      
-    if(category != '%00')
-        {
-            activeCategory(category);
-        }   
-    let storedUserShoppingCart = getCookie('shoppingCart');        
-    if(storedUserShoppingCart != undefined && storedUserShoppingCart)
-        {
-            let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
-            let shoppingCart = parsedStoredUserShoppingCart;
-            renderItemsAmount(shoppingCart.products.length);            
-            createItemSection(searchParam, categoryParam, currentOffsetParam);    
-        }                
-    createItemSection(searchParam, categoryParam, currentOffsetParam);
-    addOnClickEvents();    
-    createPagination();
-}
 
-function createPagination()
-{
-    const itemSectionContainer = document.querySelector('.item-section-container');
-    let paginationContainer = document.createElement('section');
-    paginationContainer.classList.add('pagination-container');
-    let pagePreviousToggle = document.createElement('button');
-    pagePreviousToggle.addEventListener('click', () => 
-        {
-            previousPage(search);
-        });
-    pagePreviousToggle.classList.add('page-toggle');
-    pagePreviousToggle.innerHTML = "Anterior";
-    paginationContainer.appendChild(pagePreviousToggle);    
-    let pageNextToggle = document.createElement('button');
-    pageNextToggle.addEventListener('click', () => 
-        {
-            nextPage(search);
-        });
-    pageNextToggle.classList.add('page-toggle');
-    pageNextToggle.innerHTML = "Siguiente";
-    paginationContainer.appendChild(pageNextToggle);  
-    itemSectionContainer.appendChild(paginationContainer); 
-}
 
 
 

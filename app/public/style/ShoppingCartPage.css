@@ -7,11 +7,6 @@
     --c-gray1: rgba(241, 241, 241, 1);
     --c-cian1: rgba(192, 197, 230, 1);
 
-    --c-lavender1: #6466A8;
-    --c-pink2: #F1DDD9;
-    --c-red2: #E6C2BF;
-    --c-purple3: #9266CC;
-    --c-violet3: #8E44AD;
     --c-neutral: #080A45;
 }
 
@@ -62,7 +57,7 @@ header
             align-items: center;
             width: 31vw;
             padding: 0.9vw;
-            grid-column: 3 / 5;
+            grid-column: 4 / 5;
             & .search-bar
             {                                          
                 border-radius: 5px;

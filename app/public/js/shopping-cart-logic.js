@@ -40,10 +40,10 @@ async function InsertSale(data)
 }
 async function ComputeAll(productsAndQuantities)
 {        
-    let subTotal = ComputeSubTotal(productsAndQuantities);    
-    let totalDiscount = ComputeTotalDiscount(productsAndQuantities);    
-    let total = ComputeTotal(subTotal, totalDiscount, 1.21);
-    let roundedTotal = formatNumber(total);
+    const subTotal = ComputeSubTotal(productsAndQuantities);    
+    const totalDiscount = ComputeTotalDiscount(productsAndQuantities);    
+    const total = ComputeTotal(subTotal, totalDiscount, 1.21);
+    const roundedTotal = formatNumber(total);
     return roundedTotal;
 }
 function ComputeSubTotal(productsAndQuantities)
@@ -71,7 +71,7 @@ function ComputeTotalDiscount(productsAndQuantities)
 }
 function ComputeTotal(subTotal, totalDiscount, taxes)
 {
-    let total = (subTotal - totalDiscount) * taxes;
+    const total = (subTotal - totalDiscount) * taxes;
     return total;
 }
 function computeQuantity(productsAndQuantities)
@@ -85,36 +85,37 @@ function computeQuantity(productsAndQuantities)
 
 function addProductToCart(productId)
 {
-    let storedUserShoppingCart = getCookie('shoppingCart');
-    let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);
-    let product = parsedStoredUserShoppingCart.products.find(p => p.productId == productId);
+    const storedUserShoppingCart = getCookie('shoppingCart');
+    const parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);
+    const product = parsedStoredUserShoppingCart.products.find(p => p.productId == productId);
     if(product)
         {
             product.quantity += 1;
         }
-    let shoppingCartInfoString = JSON.stringify(parsedStoredUserShoppingCart); 
+    const shoppingCartInfoString = JSON.stringify(parsedStoredUserShoppingCart); 
     document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
         
 }
 function decreaseProductFromCart(productId)
 {
-    let storedUserShoppingCart = getCookie('shoppingCart');
-    let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);
-    let product = parsedStoredUserShoppingCart.products.find(p => p.productId == productId);    
+    const storedUserShoppingCart = getCookie('shoppingCart');
+    const parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);
+    const product = parsedStoredUserShoppingCart.products.find(p => p.productId == productId);    
     if(product && product.quantity > 1)
         {
             product.quantity -= 1;
-            let shoppingCartInfoString = JSON.stringify(parsedStoredUserShoppingCart); 
+            const shoppingCartInfoString = JSON.stringify(parsedStoredUserShoppingCart); 
             document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;            
         }    
 }
 function deleteProductFromCart(productId)
 {
-    let storedUserShoppingCart = getCookie('shoppingCart');
-    let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);      
-    let indexProduct = parsedStoredUserShoppingCart.products.findIndex(p => p.productId == productId);   
+    const storedUserShoppingCart = getCookie('shoppingCart');
+    const parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);      
+    const indexProduct = parsedStoredUserShoppingCart.products.findIndex(p => p.productId == productId);
+    const product = parsedStoredUserShoppingCart.products[indexProduct];   
     parsedStoredUserShoppingCart.products.splice(indexProduct, 1);
-    let shoppingCartInfoString = JSON.stringify(parsedStoredUserShoppingCart); 
+    const shoppingCartInfoString = JSON.stringify(parsedStoredUserShoppingCart); 
     document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
     if(parsedStoredUserShoppingCart.products.length == 0)
         {
@@ -127,7 +128,7 @@ function deleteProductFromCart(productId)
     {
         return {
             isThereProductsLeft: true,
-            amount: parsedStoredUserShoppingCart.products.length
+            amount: product.quantity
         };
     }        
 }

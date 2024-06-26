@@ -1,6 +1,5 @@
 import { formatNumber,
-    BuyShoppingCart,
-    InsertSale,
+    BuyShoppingCart,    
     ComputeAll,
     computeQuantity,
     addProductToCart,
@@ -14,29 +13,34 @@ let shoppingCart =
         {
             products: []
         };
-document.addEventListener('DOMContentLoaded', async () => 
+document.addEventListener('DOMContentLoaded', () => 
     {        
-        let storedUserShoppingCart = getCookie('shoppingCart');
-        if(storedUserShoppingCart != undefined)
-            {
-                let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
-                shoppingCart = parsedStoredUserShoppingCart;
-                if(shoppingCart.products.length != 0)
-                    {
-                        renderItemsAmount(shoppingCart.products.length);
-                        renderCards();
-                        renderSummary();
-                    }
-                else
-                {
-                    renderNoProducts();
-                }            
-            } 
-        else
-        {            
-            renderNoProducts();
-        }
+        initPage();
     });
+
+function initPage()
+{
+    let storedUserShoppingCart = getCookie('shoppingCart');
+    if(storedUserShoppingCart != undefined && storedUserShoppingCart != "")
+        {
+            let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
+            let shoppingCart = parsedStoredUserShoppingCart;
+            if(shoppingCart.products.length != 0)
+                {
+                    renderItemsAmount(shoppingCart.products.length);
+                    renderCards();
+                    renderSummary();
+                }
+            else
+            {
+                renderNoProducts();
+            }            
+        } 
+    else
+    {            
+        renderNoProducts();
+    }
+}
 //Rendering
 function renderNoProducts()
 {
@@ -54,6 +58,7 @@ function renderModal()
     window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
+        window.open('/', '_self'); 
         }
     }
 }
@@ -113,9 +118,14 @@ function createProductContentContainer(product, quantity) {
 function createProductImageContainer(imageUrl) {
     const productImageContainer = document.createElement('section');
     productImageContainer.classList.add('product-image-container');
-    const productImage = document.createElement('img');
-    productImage.src = imageUrl;
-    productImageContainer.appendChild(productImage);
+    productImageContainer.innerHTML = `
+            <img src="${imageUrl}">
+    `;
+    const imgElement = productImageContainer.querySelector('img');
+    imgElement.onerror = function() {
+        this.onerror = null; // Prevent infinite loop in case default image is also not available
+        this.src = "./img/notFound.png";
+    };       
     return productImageContainer;
 }
 
@@ -216,23 +226,22 @@ async function renderSummary()
         renderItemsAmount(0);
         renderModal();;
     }); 
-    let storedUserShoppingCart = getCookie('shoppingCart');
-    let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);  
-    let productsAndQuantities = await fetchProductsById(parsedStoredUserShoppingCart);
-    let total = await ComputeAll(productsAndQuantities);    
+    const storedUserShoppingCart = getCookie('shoppingCart');
+    const parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);  
+    const productsAndQuantities = await fetchProductsById(parsedStoredUserShoppingCart);
+    const total = await ComputeAll(productsAndQuantities);    
     priceTotal.innerHTML = total;
-    let quantity = computeQuantity(productsAndQuantities);
+    const quantity = computeQuantity(productsAndQuantities);
     productQuantity.innerHTML = quantity;
 }
 function updateProductQuantities(productId, add, amount)
-{    
-            
+{                
     if(add)
         {
-            let productQuantity = document.querySelector(`.quantity-${productId}`);
+            const productQuantity = document.querySelector(`.quantity-${productId}`);
             productQuantity.innerHTML = parseInt(productQuantity.innerHTML) + 1;
             updateSummaryQuantities(true, amount);            
-            let decreaseBtn = document.querySelector(`.decrease-${productId}`);
+            const decreaseBtn = document.querySelector(`.decrease-${productId}`);
             if(decreaseBtn.disabled)
                 {
                     decreaseBtn.disabled = false; 
@@ -240,7 +249,7 @@ function updateProductQuantities(productId, add, amount)
         }
     else
     {
-        let productQuantity = document.querySelector(`.quantity-${productId}`);
+        const productQuantity = document.querySelector(`.quantity-${productId}`);
         productQuantity.innerHTML = parseInt(productQuantity.innerHTML) - 1;
         updateSummaryQuantities(false, amount);
         if(parseInt(productQuantity.innerHTML) <= 1)
@@ -253,7 +262,7 @@ function updateProductQuantities(productId, add, amount)
 }
 function updateSummaryQuantities(add, amount)
 {
-    let productsQuantities = document.querySelector('.price-product-quantity');
+    const productsQuantities = document.querySelector('.price-product-quantity');
     if(add)
         {
             productsQuantities.innerHTML = parseInt(productsQuantities.innerHTML) + amount;
@@ -265,7 +274,7 @@ function updateSummaryQuantities(add, amount)
 }
 function updateProductsList(productId)
 {
-    let {isThereProductsLeft, amount} = deleteProductFromCart(productId)
+    const {isThereProductsLeft, amount} = deleteProductFromCart(productId)
     if(isThereProductsLeft)
         {
             updateSummaryQuantities(false, amount);
@@ -282,7 +291,6 @@ function deleteProductCard(productId)
     let productCard = document.querySelector(`.id-${productId}`);    
     productCard.remove();    
 }
-//Functionality
 
 
 

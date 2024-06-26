@@ -1,66 +1,22 @@
-document.addEventListener('DOMContentLoaded', async () => {
+import {fetchProductById, fetchSaleDetailById, getCookie, getQueryParams} from "./getData.js"
+
+document.addEventListener('DOMContentLoaded', () => {
+    initPage()
+})
+
+async function initPage()
+{
     let params = getQueryParams();
-    let saleDetail = await fetchSaleDetail(params['id']);
+    let saleDetail = await fetchSaleDetailById(params['id']);
     renderItems(saleDetail);
     renderBottom(saleDetail);
     let storedUserShoppingCart = getCookie('shoppingCart');
         if(storedUserShoppingCart != undefined)
             {
                 let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
-                shoppingCart = parsedStoredUserShoppingCart;
+                let shoppingCart = parsedStoredUserShoppingCart;
                 renderItemsAmount(shoppingCart.products.length);
-            }
-        else
-        {
-            
-        }
-})
-//Retrieving data
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
-}
-function getQueryParams() {
-    let params = {};
-    window.location.search.substring(1).split("&").forEach(function(part) {
-        let item = part.split("=");
-        params[decodeURIComponent(item[0])] = decodeURIComponent(item[1]);
-    });
-    return params;
-}
-async function fetchSaleDetail(id)
-{
-    try
-    {
-        const response = await fetch(`http://localhost:5166/api/Sale/${id}`);
-        if(!response.ok)
-            {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-        const data = await response.json();        
-        return data;
-    }
-    catch
-    {
-        console.error('Error fetching data:', error);
-    }
-}
-async function fetchProduct(id)
-{    
-    try
-    {
-        const response = await fetch(`http://localhost:5166/api/Product/${id}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();         
-        return data;       
-    }
-    catch
-    {
-        console.error('Error fetching data:', error);
-    }
+            } 
 }
 //Rendering
 function renderItemsAmount(productAmount)
@@ -84,7 +40,7 @@ async function renderItems(saleDetail) {
 
     for (const product of products) {
         try {
-            const productData = await fetchProduct(product.productId);
+            const productData = await fetchProductById(product.productId);
             counter += 1;
             const itemRow = createItemRow(counter, product, productData);
             fragment.appendChild(itemRow);

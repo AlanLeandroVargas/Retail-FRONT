@@ -1,68 +1,40 @@
+import { getCookie, getQueryParams, fetchProductById } from "./getData.js";
+
 let shoppingCart = 
         {
             products: []
         };
 
-//Retrieving Data
 document.addEventListener('DOMContentLoaded', () => 
     {        
-        let storedUserShoppingCart = getCookie('shoppingCart');
-        if(storedUserShoppingCart != undefined)
-            {
-                let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
-                shoppingCart = parsedStoredUserShoppingCart;
-                renderItemsAmount(shoppingCart.products.length);
-            }
-        else
-        {
-            
-        }      
-    })
-
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
-}    
-function getQueryParams() {
-    let params = {};
-    window.location.search.substring(1).split("&").forEach(function(part) {
-        let item = part.split("=");
-        params[decodeURIComponent(item[0])] = decodeURIComponent(item[1]);
+        initPage();
     });
-    return params;
-}
-async function fetchProduct()
+
+function initPage()
 {
-    let params = getQueryParams();
-    let value = params["value"];
-    try
-    {
-        const response = await fetch(`http://localhost:5166/api/Product/${value}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json(); 
-        
-        return data;       
-    }
-    catch
-    {
-        console.error('Error fetching data:', error);
-    }
+    let storedUserShoppingCart = getCookie('shoppingCart');
+    if(storedUserShoppingCart != undefined)
+        {
+            let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
+            shoppingCart = parsedStoredUserShoppingCart;
+            renderItemsAmount(shoppingCart.products.length);
+        };
+    createProductDetails();
 }
+
+
 //Render
 function renderModal()
 {
-    const MODAL = document.querySelector('.modal');
-    const PRICE_SECTION_HEADER = document.querySelector('.price-section-header');
-    const PRODUCT_NAME = document.querySelector('.product-name');
-    let productName = PRICE_SECTION_HEADER.firstChild.innerHTML;
-    PRODUCT_NAME.innerHTML = productName;
-    MODAL.style.display = 'block';
+    const modal = document.querySelector('.modal');
+    const priceSectionHeader = document.querySelector('.price-section-header');
+    const productNameContainer = document.querySelector('.product-name');
+    let productName = priceSectionHeader.firstChild.innerHTML;
+    productNameContainer.innerHTML = productName;
+    modal.style.display = 'block';
     window.onclick = function(event) {
-    if (event.target == MODAL) {
-        MODAL.style.display = "none";
+    if (event.target == modal) {
+        modal.style.display = "none";
         }
     }
 }
@@ -78,7 +50,9 @@ function renderItemsAmount(productAmount)
 //CHAT CODE ---------------------------------------------------------------------------------------------------------
 async function createProductDetails() {
     try {
-        const product = await fetchProduct();
+        let params = getQueryParams();
+        let id = params["value"];
+        const product = await fetchProductById(id);
         const fragment = document.createDocumentFragment();
 
         const imageContainer = createImageContainer(product.imageUrl);
@@ -91,6 +65,8 @@ async function createProductDetails() {
         fragment.appendChild(priceSectionContainer);
 
         document.querySelector('.product-container').appendChild(fragment);
+
+        
     } catch (error) {
         console.error('Error fetching product details:', error);
     }
@@ -99,9 +75,15 @@ async function createProductDetails() {
 function createImageContainer(imageUrl) {
     const imageContainer = document.createElement('section');
     imageContainer.classList.add('image-container');
-    const productImage = document.createElement('img');
-    productImage.src = imageUrl;
-    imageContainer.appendChild(productImage);
+    imageContainer.innerHTML = `
+            <img src="${imageUrl}">
+    `;
+    const imgElement = imageContainer.querySelector('img');
+    imgElement.onerror = function() {
+        this.onerror = null; // Prevent infinite loop in case default image is also not available
+        this.src = "./img/notFound.png";
+    };   
+    
     return imageContainer;
 }
 
@@ -222,6 +204,5 @@ function addProduct(productId)
     renderModal();
 }
 
-const ITEM_SECTION = document.querySelector('.product-container');
-createProductDetails();
+
 

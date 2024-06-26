@@ -66,11 +66,65 @@ async function fetchProductsById(parsedStoredUserShoppingCart) {
         }        
     return productsAndQuantities;
 }
+async function fetchProductById(id)
+{
+    try
+    {
+        const response = await fetch(`https://localhost:7230/api/Product/${id}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json(); 
+        
+        return data;       
+    }
+    catch
+    {
+        console.error('Error fetching data:', error);
+    }
+}
+async function fetchSaleDetailById(id)
+{
+    try
+    {
+        const response = await fetch(`http://localhost:5166/api/Sale/${id}`);
+        if(!response.ok)
+            {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+        const data = await response.json();        
+        return data;
+    }
+    catch
+    {
+        console.error('Error fetching data:', error);
+    }
+}
+async function fetchSales(from = null, to = null)
+{
+    try
+    {
+        const response = await fetch(`https://localhost:7230/api/Sale?from=${from}&to=${to}`);
+        if(!response.ok)
+            {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+        const data = await response.json();
+        return data;
+    }
+    catch
+    {
+        console.error('Error fetching data:', error);
+    }    
+}
 
 export 
 {
     fetchProductsByFilters,
     fetchProductsById,
+    fetchProductById,
+    fetchSaleDetailById,
+    fetchSales,
     getCookie,
     getQueryParams
 }

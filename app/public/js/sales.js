@@ -1,41 +1,20 @@
+import {getCookie, fetchSales} from "./getData.js"
+
 document.addEventListener('DOMContentLoaded', () => 
     {        
-        let storedUserShoppingCart = getCookie('shoppingCart');
-        if(storedUserShoppingCart != undefined)
-            {
-                let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
-                shoppingCart = parsedStoredUserShoppingCart;
-                renderItemsAmount(shoppingCart.products.length);
-            }
-        else
-        {
-            
-        }
+        initPage();
     })
-//Retrieving data
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
-}
-async function fetchSales(from = null, to = null)
-{
-    try
-    {
-        const response = await fetch(`http://localhost:5166/api/Sale?from=${from}&to=${to}`);
-        if(!response.ok)
-            {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-        const data = await response.json();
-        return data;
-    }
-    catch
-    {
-        console.error('Error fetching data:', error);
-    }    
-}
 
+function initPage()
+{
+    let storedUserShoppingCart = getCookie('shoppingCart');
+    if(storedUserShoppingCart != undefined)
+        {
+            let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
+            let shoppingCart = parsedStoredUserShoppingCart;
+            renderItemsAmount(shoppingCart.products.length);
+        }  
+}
 //Rendering
 function renderItemsAmount(productAmount)
 {
@@ -45,6 +24,11 @@ function renderItemsAmount(productAmount)
             amountIcon.style.display = 'flex';
             amountIcon.innerHTML = `<p>${productAmount}</p>`;
         }    
+    const searchBtn = document.getElementById('search-btn');
+    searchBtn.addEventListener('click', () =>
+        {
+            searchSales();
+        })
 }
 
 //CHAT CODE ---------------------------------------------------------------------------------------------------------
