@@ -14,6 +14,11 @@ function initPage()
             let shoppingCart = parsedStoredUserShoppingCart;
             renderItemsAmount(shoppingCart.products.length);
         }  
+    const searchBtn = document.getElementById('search-btn');
+    searchBtn.addEventListener('click', () =>
+        {
+            searchSales();
+        });
 }
 //Rendering
 function renderItemsAmount(productAmount)
@@ -24,11 +29,7 @@ function renderItemsAmount(productAmount)
             amountIcon.style.display = 'flex';
             amountIcon.innerHTML = `<p>${productAmount}</p>`;
         }    
-    const searchBtn = document.getElementById('search-btn');
-    searchBtn.addEventListener('click', () =>
-        {
-            searchSales();
-        })
+    
 }
 
 //CHAT CODE ---------------------------------------------------------------------------------------------------------
@@ -59,6 +60,7 @@ function createSaleContainer(sale) {
     saleContainer.appendChild(saleDateContainer);
 
     const detailButtonContainer = createDetailButtonContainer(sale.id);
+    console.log(detailButtonContainer);
     saleContainer.appendChild(detailButtonContainer);
 
     return saleContainer;

@@ -1,15 +1,116 @@
-import { getCookie, getQueryParams, fetchProductById } from "./getData.js";
+import { getCookie, getQueryParams, fetchProductById, fetchProductsByFilters } from "./getData.js";
 
 let shoppingCart = 
         {
             products: []
         };
+let search;
+let currentOffset;
+//CHAT CODE -------------------------------------
+
+// script.js
+
+function initCarrousel()
+{
+    const carousel = document.querySelector('.item-section-content');
+    const items = document.querySelectorAll('.item-card');
+    const prevButton = document.querySelector('.carousel-control.prev');
+    const nextButton = document.querySelector('.carousel-control.next');
+    let currentIndex = 0;
+    const itemsPerView = 5; // Number of items to show per view
+    
+    function updateCarousel() {
+      const itemWidth = items[0].clientWidth + parseInt(getComputedStyle(carousel).columnGap);
+      console.log(itemWidth);
+      carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+    }
+  
+    prevButton.addEventListener('click', function () {
+      if (currentIndex > 0) {
+        currentIndex -= itemsPerView;
+      } else {
+        currentIndex = Math.floor((items.length - 1) / itemsPerView) * itemsPerView;
+      }
+      updateCarousel();
+    });
+  
+    nextButton.addEventListener('click', function () {
+      if (currentIndex < items.length - itemsPerView) {
+        currentIndex += itemsPerView;
+      } else {
+        
+        currentIndex = 0;
+      }
+      updateCarousel();
+    });
+  
+    // Update carousel on window resize
+    window.addEventListener('resize', updateCarousel);
+} 
+
+function reInitCarrousel()
+{
+    console.log("here");
+    
+    const carousel = document.querySelector('.item-section-content');
+    console.log(parseInt(getComputedStyle(carousel).columnGap));
+    const items = document.querySelectorAll('.item-card');
+    const prevButton = document.querySelector('.carousel-control.prev');
+    const nextButton = document.querySelector('.carousel-control.next');
+    let currentIndex = 0;
+    const itemsPerView = 4; // Number of items to show per view
+
+    function updateCarousel() {
+    
+    const itemWidth = items[0].clientWidth + parseInt(getComputedStyle(carousel).columnGap);
+    const maxIndex = Math.max(0, items.length - itemsPerView); // Ensure we don't go below 0
+    currentIndex = Math.min(currentIndex, maxIndex); // Prevents the index from going out of range
+    carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+
+    // Toggle visibility of carousel controls based on currentIndex
+  if (currentIndex === 0) {
+    prevButton.style.display = 'none';
+  } else {
+    prevButton.style.display = 'block';
+  }
+
+  if (currentIndex >= items.length - (itemsPerView + 1)) {
+    nextButton.style.display = 'none';
+  } else {
+    nextButton.style.display = 'block';
+  }
+  }
+  
+
+
+  prevButton.addEventListener('click', function () {
+    currentIndex -= itemsPerView;
+    if (currentIndex < 0) {
+      currentIndex = Math.max(0, items.length - itemsPerView);
+    }
+    updateCarousel();
+  });
+
+  nextButton.addEventListener('click', function () {
+    currentIndex += itemsPerView;
+    if (currentIndex > items.length - itemsPerView) {
+      currentIndex = 0;
+    }
+    updateCarousel();
+  });
+
+  // Update carousel on window resize
+  window.addEventListener('resize', updateCarousel);
+  
+  // Initial update to set the correct transform
+  updateCarousel();
+}
+//CHAT CODE------------------------------------------
 
 document.addEventListener('DOMContentLoaded', () => 
     {        
-        initPage();
-    });
-
+        initPage();                
+    });    
 function initPage()
 {
     let storedUserShoppingCart = getCookie('shoppingCart');
@@ -20,6 +121,7 @@ function initPage()
             renderItemsAmount(shoppingCart.products.length);
         };
     createProductDetails();
+    setTimeout(reInitCarrousel, 500);  
 }
 
 
@@ -53,6 +155,7 @@ async function createProductDetails() {
         let params = getQueryParams();
         let id = params["value"];
         const product = await fetchProductById(id);
+        console.log(product.category.name);
         const fragment = document.createDocumentFragment();
 
         const imageContainer = createImageContainer(product.imageUrl);
@@ -65,6 +168,8 @@ async function createProductDetails() {
         fragment.appendChild(priceSectionContainer);
 
         document.querySelector('.product-container').appendChild(fragment);
+        createCarrousel(product.category.name);
+        
 
         
     } catch (error) {
@@ -175,7 +280,78 @@ function createPriceSectionBottom(productId) {
 }
 
 //CHAT CODE ---------------------------------------------------------------------------------------------------------
+async function createCarrousel(category)
+{
+    let products = await fetchProductsByFilters(search, category, currentOffset);  
+    createCards(products);
+}
 
+function createCards(products) {
+    const itemSection = document.querySelector('.item-section-content');
+    const fragment = document.createDocumentFragment();
+    products.forEach(product => {
+        const newCard = createCard(product);
+        fragment.appendChild(newCard);
+    });
+    itemSection.appendChild(fragment);
+}
+
+function createCard(product) {
+    const newCard = document.createElement('article');
+    newCard.classList.add('item-card');
+    const imgSrc = product.imageUrl || "./img/notFound.png";
+    newCard.innerHTML = `
+        <section class="image-container">
+            <img src="${imgSrc}" alt="${product.name}">
+        </section>
+        <section class="content-result-container">
+            ${createProductName(product.name)}
+            ${createPriceSection(product.price, product.discount)}
+        </section>
+    `;
+    const imgElement = newCard.querySelector('img');
+    imgElement.onerror = function() {
+        this.onerror = null; // Prevent infinite loop in case default image is also not available
+        this.src = "./img/notFound.png";
+    };
+    newCard.addEventListener('click', () => openProductDetailPage(product.id));
+    return newCard;
+}
+
+function createProductName(name) {
+    const truncatedName = name.length > 42 ? `${name.slice(0, 42)}...` : name;
+    return `
+        <section class="name-container">
+            <h5>${truncatedName}</h5>
+        </section>
+    `;
+}
+
+function createPriceSection(price, discount) {
+    const priceWithoutDiscount = formatNumber(price);
+    if (discount > 0) {
+        const actualPrice = formatNumber(price - (price * (discount / 100)));
+        return `
+            <section class="price-and-cart-container">
+                <section class="price-container">
+                    <p class="price-without-discount">$${priceWithoutDiscount}</p>
+                    <section class="price-with-discount-container">
+                        <p>$${actualPrice}</p>
+                        <p class="percentage-off">${discount}% OFF</p>
+                    </section>
+                </section>
+            </section>
+        `;
+    } else {
+        return `
+            <section class="price-and-cart-container">
+                <section class="price-container">
+                    <p>$${priceWithoutDiscount}</p>
+                </section>
+            </section>
+        `;
+    }
+}
 
 //Functionality
 function formatNumber(number) {
