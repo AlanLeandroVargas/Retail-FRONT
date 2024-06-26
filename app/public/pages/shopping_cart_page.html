@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="/style/ShoppingCartPage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="nav-bar">
+            <section class="logo-container">
+                <a href="/"><img src="./img/logo.png" alt=""></a>
+            </section>
+            <section class="search-bar-container">
+                <input class="search-bar" type="text" name="searchBar" id="searchBar" placeholder="Busque un producto">
+            </section>
+            <section class="sales-container">
+                <section class="sale-link-container">
+                    <a href="./sales">Ver ventas</a>
+                </section>
+            </section>
+            <section class="shopping-cart-container">
+                <section class="shopping-cart-icon-container">
+                    <a href="./shopping_cart">
+                        <i class="fa-solid fa-cart-shopping fa-xl"></i> 
+                    </a>
+                    <section class="amount-icon"></section>                    
+                </section>                
+            </section>            
+        </nav>
+    </header>
+    <main>
+        <section class="no-product">
+            <p><b>Todavia no agregaste ningun producto</b></p>
+            <section class="home-link-container">
+                <a href="/">Ir al inicio</a>
+            </section>            
+        </section>
+        <section class="product-list-section">            
+        </section>
+        <section class="summary-section-container">
+            <section class="summary-section">
+                <section class="summary-section-header">
+                    <h3>Resumen de Compra</h3>
+                </section>
+                <section class="price-section">
+                    <section class="price-product">
+                        <h4>Cantidad de productos</h4>
+                        <h4 class="price-product-quantity"></h4>
+                    </section>
+                    <section class="price-total">
+                        <h3>Total</h3>
+                        <h3 class="price-total-value"></h3>
+                    </section>
+                </section>
+                <section class="summary-section-btn">
+                    <button id="buy-btn">COMPRAR</button>
+                </section>
+            </section>
+        </section>
+        <section class="modal">
+            <section class="modal-content">                
+                <p><b>Se ha realizado tu compra con exito!</b></p>                
+                <section class="product-list-link-container">
+                    <a href="/">Ir al inicio</a>
+                </section>
+            </section>
+        </section> 
+    </main>  
+    <script src="/js/shopping-cart-render.js" type="module"></script>  
+</body>
+</html>
