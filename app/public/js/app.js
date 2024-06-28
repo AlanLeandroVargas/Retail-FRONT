@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () =>
                                                                                     decodeParams(window.location.href); 
         search = searchParam;
         currentOffset = currentOffsetParam;  
-        category = categoryParam;      
+        category = categoryParam;              
         if(category != '%00')
             {
                 activeCategory(category);
@@ -164,7 +164,7 @@ function createPaginationSection()
 //Rendering - Paginado
 function searchProduct(search)
 {
-    let encodedUrl = encodeParams(indexUrl, search, category, currentOffset)
+    let encodedUrl = encodeParams(indexUrl, search)
     window.open(encodedUrl, '_self'); 
 }
 function nextPage(search = '%00')
@@ -198,6 +198,7 @@ function previousPage(search = '%00')
 //Rendering - CardCreation
 async function createItemSection(search = '%00', category = '%00', currentOffset = 0)
 {    
+    console.log("Firing");
     fetchByPromises(search, category, currentOffset);
     // let products = await fetchProductsByFilters(search, category, currentOffset);    
     // createCards(products);
@@ -238,7 +239,7 @@ function activeCategory(category)
     const filterButton = document.getElementById(`${category}`);
     filterButton.childNodes[1].classList.toggle('active');
 }
-function encodeParams(url, search, category, currentOffset) {
+function encodeParams(url, search, category = '%00', currentOffset = 0) {
     const searchParams = new URLSearchParams();
     searchParams.set('search', search);
     searchParams.set('category', category);

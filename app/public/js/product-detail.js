@@ -117,9 +117,34 @@ function initPage()
             renderItemsAmount(shoppingCart.products.length);
         };
     createProductDetails();
+    addListeners();
     setTimeout(reInitCarrousel, 500);  
 }
 
+function addListeners()
+{
+    const searchBar = document.querySelector('#searchBar');
+    searchBar.addEventListener('keydown', (e) =>
+        {        
+            if(e.key == 'Enter')
+                {
+                    searchProduct(searchBar.value);                        
+                }                
+        });  
+}
+
+function searchProduct(search)
+{
+    let encodedUrl = encodeParams('/?', search)
+    window.open(encodedUrl, '_self'); 
+}
+function encodeParams(url, search, category = '%00', currentOffset = 0) {
+    const searchParams = new URLSearchParams();
+    searchParams.set('search', search);
+    searchParams.set('category', category);
+    searchParams.set('currentOffset', currentOffset);    
+    return `${url}${searchParams.toString()}`;
+}
 
 //Render
 function renderModal()
@@ -224,21 +249,41 @@ function createPriceSectionContainer(product) {
     return priceSectionContainer;
 }
 
+// function createPriceSectionContent(name, price, discount)
+// {
+//     console.log("Here");
+//     const priceSectionContent = document.createElement('section');
+//     priceSectionContent.classList.add('price-section-content');
+//     if (discount > 0) {
+//         const actualPrice = price - (price * (discount / 100));
+//         priceSectionContent.innerHTML = `
+//         <h4 class="price-section-header">${name}</h4>
+//         <p class="price-without-discount">$${formatNumber(price)}</p>
+//         <section class="price-with-discount-container">
+//             <p>$${formatNumber(actualPrice)}</p><p class="percentage-off">${discount}% OFF</p>
+//         </section>
+//         `;        
+//     } else {
+//         priceSectionContent.innerHTML = `
+//         <h4 class="price-section-header">${name}</h4>
+//         <p class="price-without-discount">$${formatNumber(price)}</p>        
+//         `;
+//     }
+//     return priceSectionContent;
+// }
+
 function createPriceSectionHeader(name) {
     const priceSectionHeader = document.createElement('section');
     priceSectionHeader.classList.add('price-section-header');
-    const productName = document.createElement('h4');
-    productName.innerHTML = name;
-    priceSectionHeader.appendChild(productName);
+    priceSectionHeader.innerHTML = `
+    <h4 class="price-section-header">${name}</h4>
+    `;        
     return priceSectionHeader;
 }
 
 function createPriceSectionContent(price, discount) {
     const priceSectionContent = document.createElement('section');
     priceSectionContent.classList.add('price-section-content');
-    // const productPriceWithoutDiscount = document.createElement('p');
-    // productPriceWithoutDiscount.innerHTML = `$${formatNumber(price)}`;
-
     if (discount > 0) {
         const actualPrice = price - (price * (discount / 100));
         priceSectionContent.innerHTML = `
@@ -246,26 +291,11 @@ function createPriceSectionContent(price, discount) {
         <section class="price-with-discount-container">
             <p>$${formatNumber(actualPrice)}</p><p class="percentage-off">${discount}% OFF</p>
         </section>
-        `;
-
-        // productPriceWithoutDiscount.classList.add('price-without-discount');
-        // const priceWithDiscountContainer = document.createElement('section');
-        // priceWithDiscountContainer.classList.add('price-with-discount-container');
-        // const priceWithDiscount = document.createElement('p');
-        // // const actualPrice = price - (price * (discount / 100));
-        // priceWithDiscount.innerHTML = `$${formatNumber(actualPrice)}`;
-        // const percentageOff = document.createElement('p');
-        // percentageOff.classList.add('percentage-off');
-        // percentageOff.innerHTML = `${discount}% OFF`;
-        // priceWithDiscountContainer.appendChild(priceWithDiscount);
-        // priceWithDiscountContainer.appendChild(percentageOff);
-        // priceSectionContent.appendChild(productPriceWithoutDiscount);
-        // priceSectionContent.appendChild(priceWithDiscountContainer);
+        `;        
     } else {
         priceSectionContent.innerHTML = `
         <p class="price-without-discount">$${formatNumber(price)}</p>        
         `;
-        // priceSectionContent.appendChild(productPriceWithoutDiscount);
     }
 
     return priceSectionContent;
