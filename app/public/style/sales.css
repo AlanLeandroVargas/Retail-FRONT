@@ -3,6 +3,7 @@ main
     & .sales-section
     {
         display: grid;
+        height: 100%;
         grid-template-columns: repeat(12, 1fr);
         grid-template-rows: repeat(4, auto);
         & .sale-list-container
@@ -125,4 +126,9 @@ main
             display: block;
         }        
     }
+}
+
+footer
+{
+    margin-top: 15vh;
 }

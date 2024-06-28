@@ -8,13 +8,37 @@ main
         border-radius: 10px;
         margin: 5vh;
         padding: 10px;
-        grid-column: 2 / 12;
+        grid-column: 1 / 13;
         background-color: var(--c-white1);
         & .sale-detail-header
         {        
             display: grid;
-            grid-template-columns: repeat(6, 1fr);  
+            grid-template-columns: repeat(12, 1fr);  
             padding: 10px;
+            & .product-item
+            {                    
+                grid-column: 1 / 2;
+            }
+            & .product-name
+            {
+                grid-column: 2 / 8;
+            }
+            & .product-price
+            {
+                grid-column: 8 / 10;    
+            }
+            & .product-discount
+            {
+                grid-column: 10 / 11;
+            }
+            & .product-quantity
+            {
+                grid-column: 11 / 12;
+            }
+            & .product-total
+            {
+                grid-column: 12 / 13;
+            }
         }
         & .sale-detail-content
         {
@@ -24,12 +48,37 @@ main
             & .item-row-content
             {
                 display: grid;
-                grid-template-columns: repeat(6, 1fr);
+                grid-template-columns: repeat(12, 1fr);
                 box-shadow: 0px 0.5px 0.5px var(--c-cian1);
                 & p
                 {
                     margin: 1px;
                 }
+                & .product-item
+            {                    
+                grid-column: 1 / 2;
+            }
+            & .product-name
+            {
+                grid-column: 2 / 8;
+            }
+            & .product-price
+            {
+                grid-column: 8 / 10;    
+            }
+            & .product-discount
+            {
+                grid-column: 10 / 11;
+            }
+            & .product-quantity
+            {
+                grid-column: 11 / 12;
+            }
+            & .product-total
+            {
+                grid-column: 12 / 13;
+            }
+                                
             }                    
         }
         & .sale-detail-bottom
@@ -47,4 +96,9 @@ main
             }
         }
     }
+}
+
+footer
+{
+    margin-top: 15vh;
 }

@@ -11,7 +11,7 @@ async function initPage()
     renderItems(saleDetail);
     renderBottom(saleDetail);
     let storedUserShoppingCart = getCookie('shoppingCart');
-        if(storedUserShoppingCart != undefined)
+        if(storedUserShoppingCart != undefined && storedUserShoppingCart)
             {
                 let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
                 let shoppingCart = parsedStoredUserShoppingCart;
@@ -56,12 +56,12 @@ function createItemRow(counter, product, productData) {
     const itemRow = document.createElement('section');
     itemRow.classList.add('item-row-content');
     itemRow.innerHTML = `
-        <p>${counter}</p>
-        <p>${productData.name}</p>
-        <p>$${formatNumber(product.price)}</p>
-        <p>${product.discount}%</p>
-        <p>${product.quantity}</p>
-        <p>$${formatNumber(product.quantity * product.price)}</p>
+        <p class="product-item">${counter}</p>
+        <p class="product-name">${productData.name}</p>
+        <p class="product-price">$${formatNumber(product.price)}</p>
+        <p class="product-discount">${product.discount}%</p>
+        <p class="product-quantity">${product.quantity}</p>
+        <p class="product-total">$${formatNumber(product.quantity * product.price)}</p>
     `;
     return itemRow;
 }

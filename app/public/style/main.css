@@ -44,8 +44,8 @@ header
                 margin-left: 10px;                
                 & img
                 {                   
-                    height: 50px;
-                    width: 50px;
+                    height: 75px;
+                    width: 75px;
                 }
             }
         }   
@@ -120,7 +120,65 @@ header
 
 footer
 {
+    display: grid;        
+    grid-template-columns: repeat(12, 1fr); 
     background-color: black;
     height: 20vh;
-    grid-column: 1 / 13;
+    padding-top: 2vh;    
+    & .url-list
+    {
+        margin-left: 0.7vw;
+        grid-column: 1 / 13;
+    }
+    & .bottom-footer
+    {
+        display: flex;        
+        background-color: black;
+        justify-content: space-between;
+        align-items: center;
+        grid-column: 1 / 13;
+        & p
+        {            
+            margin-left: 0.7vw;
+            color: white;
+        }
+        & .social-media
+        {
+            display: flex;
+            align-items: center;        
+            /* grid-column: 11 / 13; */
+            & svg
+            {
+                padding: 0px 10px;
+                height: 25px;
+                width: 25px;
+                fill: white;
+            }
+        }
+    }    
+}
+
+/* styles.css */
+#loading-spinner {
+    display: none;
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.spinner {
+    border: 16px solid var(--c-white1);
+    border-top: 16px solid var(--c-blue1);
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

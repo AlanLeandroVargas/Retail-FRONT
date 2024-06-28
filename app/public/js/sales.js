@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () =>
 function initPage()
 {
     let storedUserShoppingCart = getCookie('shoppingCart');
-    if(storedUserShoppingCart != undefined)
+    if(storedUserShoppingCart != undefined && storedUserShoppingCart)
         {
             let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
             let shoppingCart = parsedStoredUserShoppingCart;
@@ -59,8 +59,7 @@ function createSaleContainer(sale) {
     const saleDateContainer = createSaleDateContainer(sale.date);
     saleContainer.appendChild(saleDateContainer);
 
-    const detailButtonContainer = createDetailButtonContainer(sale.id);
-    console.log(detailButtonContainer);
+    const detailButtonContainer = createDetailButtonContainer(sale.id);    
     saleContainer.appendChild(detailButtonContainer);
 
     return saleContainer;
@@ -107,7 +106,7 @@ function createDetailButtonContainer(saleId) {
     detailButtonContainer.classList.add('details-button-container');
 
     const detailButton = document.createElement('button');
-    detailButton.innerHTML = "<h4>Ver mas</h4>";
+    detailButton.innerHTML = "<h4>Ver detalle</h4>";
     detailButton.addEventListener('click', () => {
         searchSaleDetail(saleId);
     });

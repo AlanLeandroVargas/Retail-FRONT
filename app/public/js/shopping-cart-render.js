@@ -1,5 +1,5 @@
 import { formatNumber,
-    BuyShoppingCart,    
+    buyShoppingCart,    
     ComputeAll,
     computeQuantity,
     addProductToCart,
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () =>
 function initPage()
 {
     let storedUserShoppingCart = getCookie('shoppingCart');
-    if(storedUserShoppingCart != undefined && storedUserShoppingCart != "")
+    if(storedUserShoppingCart != undefined && storedUserShoppingCart)
         {
             let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
             let shoppingCart = parsedStoredUserShoppingCart;
@@ -187,6 +187,7 @@ function createProductQuantityContainer(productId, quantity) {
     increaseBtn.innerText = "+";
     increaseBtn.addEventListener('click', () => addProductToCart(productId));
     increaseBtn.addEventListener('click', () => updateProductQuantities(productId, true, 1));
+    increaseBtn.addEventListener('click', () => updateSummaryTotal());
 
     const quantitySpan = document.createElement('span');
     quantitySpan.classList.add(`quantity-${productId}`);
@@ -197,6 +198,7 @@ function createProductQuantityContainer(productId, quantity) {
     decreaseBtn.innerText = "-";
     decreaseBtn.addEventListener('click', () => decreaseProductFromCart(productId));
     decreaseBtn.addEventListener('click', () => updateProductQuantities(productId, false, 1));
+    decreaseBtn.addEventListener('click', () => updateSummaryTotal());
     if (quantity <= 1) {
         decreaseBtn.disabled = true;
     }
@@ -222,7 +224,7 @@ async function renderSummary()
     const productQuantity = document.querySelector('.price-product-quantity');   
     const buyBtn = document.getElementById('buy-btn');
     buyBtn.addEventListener('click', () => {
-        BuyShoppingCart();
+        buyShoppingCart();
         renderItemsAmount(0);
         renderModal();;
     }); 
@@ -233,6 +235,15 @@ async function renderSummary()
     priceTotal.innerHTML = total;
     const quantity = computeQuantity(productsAndQuantities);
     productQuantity.innerHTML = quantity;
+}
+async function updateSummaryTotal()
+{
+    const storedUserShoppingCart = getCookie('shoppingCart');
+    const parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);  
+    const priceTotal = document.querySelector('.price-total-value');
+    const productsAndQuantities = await fetchProductsById(parsedStoredUserShoppingCart);
+    const total = await ComputeAll(productsAndQuantities);    
+    priceTotal.innerHTML = total;
 }
 function updateProductQuantities(productId, add, amount)
 {                

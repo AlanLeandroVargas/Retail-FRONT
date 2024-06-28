@@ -7,7 +7,7 @@ function formatNumber(number) {
         maximumFractionDigits: 2
     }).format(number);
 }
-async function BuyShoppingCart()
+async function buyShoppingCart()
 {
     const storedUserShoppingCart = getCookie('shoppingCart');
     const parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);  
@@ -140,7 +140,7 @@ function disposeCart()
 export
 {
     formatNumber,
-    BuyShoppingCart,
+    buyShoppingCart,
     InsertSale,
     ComputeAll,
     computeQuantity,

@@ -211,14 +211,14 @@ main
         }
         & .price-section-container
         {
-            display: flex;
-            flex-direction: column; 
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: repeat(1, fr); 
+            /* justify-content: space-between; */
             margin: 2vh 2vw;
             border-radius: 10px;                                    
             box-shadow: 0px 0px 2.5px var(--c-cian1);
-            width: 22vw;
-            height: 40vh;    
+            width: 26vw;
+            height: 50vh;    
             & .price-section-header
             {
                 display: flex;
@@ -240,23 +240,27 @@ main
                 & .price-without-discount
                 {
                     color: rgba(0, 0, 0, .55);
-                    font-size: 0.9rem;
+                    font-size: 0.8rem;
                     text-decoration: line-through;
                 }
                 & .price-with-discount-container
                 {
                     display: flex;
-                    align-items: center;
+                    align-items: center; 
+                    & p
+                    {
+                        font-size: 1.5rem;
+                    }                   
                     & .percentage-off
                     {
                         margin-left: 10px;
                         color: rgb(6, 184, 6);
-                        font-size: 0.8rem;
+                        font-size: 1rem;
                     }
                 }
             }            
             & .price-section-bottom
-            {                   
+            {                                
                 & .cart-btn-container
                 {
                     height: 9vh;

@@ -20,8 +20,7 @@ function initCarrousel()
     const itemsPerView = 5; // Number of items to show per view
     
     function updateCarousel() {
-      const itemWidth = items[0].clientWidth + parseInt(getComputedStyle(carousel).columnGap);
-      console.log(itemWidth);
+      const itemWidth = items[0].clientWidth + parseInt(getComputedStyle(carousel).columnGap);      
       carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
     }
   
@@ -49,11 +48,8 @@ function initCarrousel()
 } 
 
 function reInitCarrousel()
-{
-    console.log("here");
-    
-    const carousel = document.querySelector('.item-section-content');
-    console.log(parseInt(getComputedStyle(carousel).columnGap));
+{    
+    const carousel = document.querySelector('.item-section-content');    
     const items = document.querySelectorAll('.item-card');
     const prevButton = document.querySelector('.carousel-control.prev');
     const nextButton = document.querySelector('.carousel-control.next');
@@ -114,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () =>
 function initPage()
 {
     let storedUserShoppingCart = getCookie('shoppingCart');
-    if(storedUserShoppingCart != undefined)
+    if(storedUserShoppingCart != undefined && storedUserShoppingCart)
         {
             let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
             shoppingCart = parsedStoredUserShoppingCart;
@@ -154,8 +150,7 @@ async function createProductDetails() {
     try {
         let params = getQueryParams();
         let id = params["value"];
-        const product = await fetchProductById(id);
-        console.log(product.category.name);
+        const product = await fetchProductById(id);        
         const fragment = document.createDocumentFragment();
 
         const imageContainer = createImageContainer(product.imageUrl);
@@ -241,25 +236,36 @@ function createPriceSectionHeader(name) {
 function createPriceSectionContent(price, discount) {
     const priceSectionContent = document.createElement('section');
     priceSectionContent.classList.add('price-section-content');
-    const productPriceWithoutDiscount = document.createElement('p');
-    productPriceWithoutDiscount.innerHTML = `$${formatNumber(price)}`;
+    // const productPriceWithoutDiscount = document.createElement('p');
+    // productPriceWithoutDiscount.innerHTML = `$${formatNumber(price)}`;
 
     if (discount > 0) {
-        productPriceWithoutDiscount.classList.add('price-without-discount');
-        const priceWithDiscountContainer = document.createElement('section');
-        priceWithDiscountContainer.classList.add('price-with-discount-container');
-        const priceWithDiscount = document.createElement('p');
         const actualPrice = price - (price * (discount / 100));
-        priceWithDiscount.innerHTML = `$${formatNumber(actualPrice)}`;
-        const percentageOff = document.createElement('p');
-        percentageOff.classList.add('percentage-off');
-        percentageOff.innerHTML = `${discount}% OFF`;
-        priceWithDiscountContainer.appendChild(priceWithDiscount);
-        priceWithDiscountContainer.appendChild(percentageOff);
-        priceSectionContent.appendChild(productPriceWithoutDiscount);
-        priceSectionContent.appendChild(priceWithDiscountContainer);
+        priceSectionContent.innerHTML = `
+        <p class="price-without-discount">$${formatNumber(price)}</p>
+        <section class="price-with-discount-container">
+            <p>$${formatNumber(actualPrice)}</p><p class="percentage-off">${discount}% OFF</p>
+        </section>
+        `;
+
+        // productPriceWithoutDiscount.classList.add('price-without-discount');
+        // const priceWithDiscountContainer = document.createElement('section');
+        // priceWithDiscountContainer.classList.add('price-with-discount-container');
+        // const priceWithDiscount = document.createElement('p');
+        // // const actualPrice = price - (price * (discount / 100));
+        // priceWithDiscount.innerHTML = `$${formatNumber(actualPrice)}`;
+        // const percentageOff = document.createElement('p');
+        // percentageOff.classList.add('percentage-off');
+        // percentageOff.innerHTML = `${discount}% OFF`;
+        // priceWithDiscountContainer.appendChild(priceWithDiscount);
+        // priceWithDiscountContainer.appendChild(percentageOff);
+        // priceSectionContent.appendChild(productPriceWithoutDiscount);
+        // priceSectionContent.appendChild(priceWithDiscountContainer);
     } else {
-        priceSectionContent.appendChild(productPriceWithoutDiscount);
+        priceSectionContent.innerHTML = `
+        <p class="price-without-discount">$${formatNumber(price)}</p>        
+        `;
+        // priceSectionContent.appendChild(productPriceWithoutDiscount);
     }
 
     return priceSectionContent;
@@ -314,7 +320,10 @@ function createCard(product) {
         this.onerror = null; // Prevent infinite loop in case default image is also not available
         this.src = "./img/notFound.png";
     };
-    newCard.addEventListener('click', () => openProductDetailPage(product.id));
+    newCard.addEventListener('click', () =>
+        {
+            window.open('./product_detail?value=' + encodeURIComponent(product.id), '_self')
+        });
     return newCard;
 }
 

@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () =>
             }                
         createItemSection(searchParam, categoryParam, currentOffsetParam);
         addOnClickEvents();    
-        createPaginationSection();
+        
     }    
 
 
@@ -68,13 +68,13 @@ function renderItemsAmount(productAmount)
 //CHAT CODE ---------------------------------------------------------------------------------------------------------
 function createCards(products) {
     const itemSection = document.querySelector('.item-section-content');
-    console.log(itemSection);
     const fragment = document.createDocumentFragment();
     products.forEach(product => {
         const newCard = createCard(product);
         fragment.appendChild(newCard);
     });
     itemSection.appendChild(fragment);
+    createPaginationSection();
 }
 
 function createCard(product) {
@@ -198,10 +198,29 @@ function previousPage(search = '%00')
 //Rendering - CardCreation
 async function createItemSection(search = '%00', category = '%00', currentOffset = 0)
 {    
-    
-    let products = await fetchProductsByFilters(search, category, currentOffset);    
-    createCards(products);
+    fetchByPromises(search, category, currentOffset);
+    // let products = await fetchProductsByFilters(search, category, currentOffset);    
+    // createCards(products);
 }
+
+function fetchByPromises(search, category, currentOffset)
+{
+    document.getElementById('loading-spinner').style.display = 'flex';
+    fetch
+            (`https://localhost:7230/api/Product?name=${search}&category=${category}&offset=${currentOffset}&limit=12`)
+    .then(response => response.json())
+    .then(data => {createCards(data)})
+    .catch(error => 
+        {
+            console.log('Error fetching products', error);
+        })
+    .finally(() => 
+        {
+            document.getElementById('loading-spinner').style.display = 'none';
+            // document.querySelectorAll('.item-section-content').style.display = 'block';
+        })
+}
+
 //Redirectioning
 function openProductDetailPage(value)
 {    

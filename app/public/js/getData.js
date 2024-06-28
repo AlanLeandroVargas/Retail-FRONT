@@ -91,7 +91,7 @@ async function fetchSaleDetailById(id)
             {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-        const data = await response.json();        
+        const data = await response.json();               
         return data;
     }
     catch
@@ -108,7 +108,7 @@ async function fetchSales(from = null, to = null)
             {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-        const data = await response.json();
+        const data = await response.json();        
         return data;
     }
     catch
