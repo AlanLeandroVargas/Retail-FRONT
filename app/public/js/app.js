@@ -237,6 +237,7 @@ function formatNumber(number) {
 function activeCategory(category)
 {    
     const filterButton = document.getElementById(`${category}`);
+    filterButton.classList.toggle('active');
     filterButton.childNodes[1].classList.toggle('active');
 }
 function encodeParams(url, search, category = '%00', currentOffset = 0) {
@@ -257,10 +258,17 @@ function decodeParams(url) {
     };
 }
 //Category Filter
-function filterByCategory(category, search = '%00')
+function filterByCategory(categoryName, search = '%00')
 {        
-    let encodedUrl = encodeParams(indexUrl, search, category, currentOffset)
-    window.open(encodedUrl, '_self');    
+    if(categoryName == category)
+        {
+            window.open(indexUrl, '_self');
+        }
+    else
+    {
+        let encodedUrl = encodeParams(indexUrl, search, categoryName, currentOffset)
+        window.open(encodedUrl, '_self');    
+    }    
 }
 
 

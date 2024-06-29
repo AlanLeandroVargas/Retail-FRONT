@@ -40,7 +40,7 @@ main
                         height: 7vh;
                         border: 0.25px solid rgb(191, 191, 191);
                         cursor: pointer;
-                        transition: 0.25s;
+                        transition: 0.25s;                        
                         & .circle-button
                         {
                             border-radius: 50px;
@@ -52,7 +52,7 @@ main
                         }                     
                         & .active
                         {
-                            background-color: yellow;
+                            background-color: var(--c-yellow1);
                         }
                         & .category-name-container
                         {
@@ -64,12 +64,14 @@ main
                         }
                         &:active
                         {
-                            & .CircleButton
-                            {
-                                background-color: var(--c-yellow1);
-                                border: 0.25px solid var(--c-blue1);
-                            }
+                            background-color: var(--c-blue1); 
+                            color: var(--c-white1);                            
                         }
+                    }
+                    & .active
+                    {
+                        color: var(--c-white1); 
+                        background-color: var(--c-blue1);
                     }
                 }
             }
