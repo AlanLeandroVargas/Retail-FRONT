@@ -89,6 +89,11 @@ function addListeners()
                     searchProduct(searchBar.value);                        
                 }                
         });  
+    const modalBtn = document.querySelector('.shopping-cart-btn');
+    modalBtn.addEventListener('click', () =>
+        {
+            window.open("./shopping_cart", "_self");
+        })
 }
 
 function searchProduct(search)
@@ -133,7 +138,7 @@ function renderItemsAmount(productAmount)
 async function createProductDetails() {
     try {
         let params = getQueryParams();
-        let id = params["value"];
+        let id = params["value"];        
         const product = await fetchProductById(id);        
         const fragment = document.createDocumentFragment();
 

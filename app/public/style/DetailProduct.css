@@ -321,18 +321,31 @@ main
             padding: 20px;
             border: 1px solid #888;
             width: 50vw; /* Could be more or less, depending on screen size */
-            & .shopping-cart-link-container
+                        
+            & .shopping-cart-btn-container
             {
                 display: flex;
-                justify-content: center;
-                
-                & a
+                justify-content: center;                
+                & button
                 {
-                    border-radius: 10px;
-                    padding: 10px;
+                    
+                    border: none;
+                    border-radius: 50px;                    
+                    height: 7vh;           
+                    width: 7vw;                          
                     background-color: var(--c-yellow1);
-                    text-decoration: none;
+                    cursor: pointer;                   
+                    &:hover
+                    {
+                        background-color: var(--c-yellow2);
+                    }
+                    &:active
+                    {
+                        background-color: var(--c-blue1);
+                        color: white;
+                    }
                 }
+                
             }
         }
     }

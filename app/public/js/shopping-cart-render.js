@@ -52,9 +52,14 @@ function renderNoProducts()
     noProduct.style.display = 'flex';
 }
 function renderModal()
-{
+{    
     const modal = document.querySelector('.modal');
     modal.style.display = 'block';
+    const modalBtn = document.querySelector('.product-list-btn');
+    modalBtn.addEventListener('click', () => 
+        {
+            window.open('/', '_self');
+        })
     window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
