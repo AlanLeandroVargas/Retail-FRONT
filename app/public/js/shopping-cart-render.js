@@ -47,6 +47,11 @@ function renderNoProducts()
     const summary = document.querySelector('.summary-section-container');
     const productList = document.querySelector('.product-list-section');
     const noProduct = document.querySelector('.no-product');
+    const btn = document.querySelector('.home-btn');
+    btn.addEventListener('click', () => 
+        {
+            window.open('/', '_self');
+        })
     summary.style.display = 'none';
     productList.style.display = 'none';
     noProduct.style.display = 'flex';

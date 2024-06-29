@@ -15,19 +15,32 @@ main
         margin-top: 30px;
         grid-column: 5 / 9;
         background-color: var(--c-white1);
-        & .home-link-container
+        & .home-btn-container
         {
             
             margin: 20px;
             display: flex;
             justify-content: center;
-            & a
-            {
-                border-radius: 10px;
-                padding: 10px;
-                background-color: var(--c-yellow1);
-                text-decoration: none;
-            }
+
+            & button
+                {
+                    
+                    border: none;
+                    border-radius: 50px;                    
+                    height: 7vh;           
+                    width: 7vw;                          
+                    background-color: var(--c-yellow1);
+                    cursor: pointer;                   
+                    &:hover
+                    {
+                        background-color: var(--c-yellow2);
+                    }
+                    &:active
+                    {
+                        background-color: var(--c-blue1);
+                        color: white;
+                    }
+                }             
         }
     }
     & .product-list-section
