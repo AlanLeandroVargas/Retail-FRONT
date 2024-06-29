@@ -84,6 +84,9 @@ function renderItemsAmount(productAmount)
 //CHAT CODE ---------------------------------------------------------------------------------------------------------
 
 function createCards(productsAndQuantities) {
+    const spinner = document.querySelector('#loading-spinner');
+    spinner.style.display = 'none';
+
     const productList = document.querySelector('.product-list-section');
     const fragment = document.createDocumentFragment();
 
@@ -223,6 +226,8 @@ async function renderCards()
     let productsAndQuantities = await fetchProductsById(parsedStoredUserShoppingCart);
     createCards(productsAndQuantities);
 }
+
+
 async function renderSummary()
 {
     const priceTotal = document.querySelector('.price-total-value');

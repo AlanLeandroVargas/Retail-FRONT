@@ -97,7 +97,10 @@ main
         }
     }
 }
-
+#loading-spinner
+{
+    margin-left: 30vw;
+}
 footer
 {
     margin-top: 15vh;

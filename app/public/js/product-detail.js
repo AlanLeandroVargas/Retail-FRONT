@@ -76,7 +76,21 @@ function initPage()
         };
     createProductDetails();
     addListeners();
-    setTimeout(InitCarrousel, 500);  
+    setTimeout(InitCarrousel, 500); 
+    toggleSpinner(); 
+}
+
+function toggleSpinner()
+{
+    const spinner = document.getElementById('loading-spinner');
+    if(spinner.style.display == 'none')
+        {
+            spinner.style.display = 'flex';
+        }
+    else
+    {
+        spinner.style.display = 'none';
+    }
 }
 
 function addListeners()

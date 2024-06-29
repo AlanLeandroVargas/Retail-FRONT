@@ -8,6 +8,7 @@ async function initPage()
 {
     let params = getQueryParams();
     let saleDetail = await fetchSaleDetailById(params['id']);
+    toggleSpinner();
     renderItems(saleDetail);
     renderBottom(saleDetail);
     let storedUserShoppingCart = getCookie('shoppingCart');
@@ -17,6 +18,18 @@ async function initPage()
                 let shoppingCart = parsedStoredUserShoppingCart;
                 renderItemsAmount(shoppingCart.products.length);
             } 
+}
+function toggleSpinner()
+{
+    const spinner = document.getElementById('loading-spinner');
+    if(spinner.style.display == 'none')
+        {
+            spinner.style.display = 'flex';
+        }
+    else
+    {
+        spinner.style.display = 'none';
+    }
 }
 //Rendering
 function renderItemsAmount(productAmount)

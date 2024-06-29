@@ -19,6 +19,7 @@ function initPage()
         {
             searchSales();
         });
+    toggleSpinner();
 }
 //Rendering
 function renderItemsAmount(productAmount)
@@ -96,11 +97,24 @@ function createDetailButtonContainer(saleId) {
     const detailButton = document.createElement('button');
     detailButton.innerHTML = "<h4>Ver detalle</h4>";
     detailButton.addEventListener('click', () => {
-        searchSaleDetail(saleId);
+        searchSaleDetail(saleId);        
     });
 
     detailButtonContainer.appendChild(detailButton);
     saleContainer.appendChild(detailButtonContainer);    
+}
+
+function toggleSpinner()
+{
+    const spinner = document.getElementById('loading-spinner');
+    if(spinner.style.display == 'none')
+        {
+            spinner.style.display = 'flex';
+        }
+    else
+    {
+        spinner.style.display = 'none';
+    }
 }
 
 //Functionality
@@ -117,9 +131,11 @@ async function searchSaleDetail(id)
 async function searchSales()
 {
     toggleSearchBox();
+    toggleSpinner();
     let from = document.querySelector('#initialDate').value;
     let to = document.querySelector('#finalDate').value;    
     let sales = await fetchSales(from, to);
+    toggleSpinner();
     renderSaleCards(sales);
 }
 
