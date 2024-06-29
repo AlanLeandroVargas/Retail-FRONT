@@ -27,6 +27,13 @@
     width: 92vw;
     height: 65vh;    
 }
+.carrousel-section
+{
+    & h1
+    {
+        margin-left: 2vw;
+    }
+}
 
 .carousel-control {
     position: absolute;
@@ -179,8 +186,12 @@ main
         display: flex;
         background-color: var(--c-white1);
         border-radius: 10px; 
-        margin: 8vh 2vw;
-        grid-column: 1 / 13;        
+        margin: 8vh;
+        margin-left: 2vw;
+        margin-right: 2vw;
+        width: 96vw;
+
+        grid-column: 1 / 13;      
         & .image-container
         {
             grid-column: 1 / 6;
@@ -195,8 +206,8 @@ main
         {
             display: flex;
             flex-direction: column;                       
-            margin: 2vh 0px;
-            width: 45vw;
+            margin: 2vh;
+            width: 40vw;
             height: 65vh;
             overflow-y: scroll;        
             & .product-detail-container-header
@@ -232,17 +243,7 @@ main
                 }
             }
             & .price-section-content
-            {
-                /* display: flex;
-                justify-content: center; */
-                /* margin-top: 10px;
-                margin-bottom: 10px;  
-                margin-right: 5px; 
-                margin-left: 25px; 
-                & h4
-                {
-                    margin-bottom: 20px;
-                }                                 */
+            {                
                 margin-left: 25px;
                 & p
                 {

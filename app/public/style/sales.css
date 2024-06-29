@@ -1,3 +1,31 @@
+.item-row
+{
+    display: grid;
+    grid-template-columns: (12,1fr);
+    & .total-pay-value
+    {
+        & .total-pay-value
+                    {
+                        display: flex;
+                        align-items: center;
+                        grid-column: 1 / 5;
+                    }
+                    & .quantity-value
+                    {
+                        display: flex;
+                        align-items: center;
+                        grid-column: 5 / 10;
+                    }
+                    & .date-value
+                    {
+                        display: flex;
+                        align-items: center;
+                        grid-column: 10 / 13;
+                    }
+    }
+}
+
+
 main
 {    
     & .sales-section
@@ -7,51 +35,71 @@ main
         grid-template-columns: repeat(12, 1fr);
         grid-template-rows: repeat(4, auto);
         & .sale-list-container
-        {
-            grid-column: 3 / 11;            
+        {            
+            display: none;
+            grid-column: 1 / 12;            
             
             & .sale-container
-            {                
-                display: flex;
-                flex-direction: column;
+            {                                                                             
                 border-radius: 10px;
                 background-color: var(--c-white1);
                 width: 100%;
-                margin: 20px;
+                margin: 5vh;
                 padding: 20px;
+                display: grid;
+                grid-template-columns: (12, 1fr);
                 & p
                 {
                     font-size: 1.3rem;
                 }
-                & .sale-total-container
-                {
-                    display: flex;
-                    justify-content: space-around;
-                    margin: 5px;
-                }
-                & .sale-product-quantity-container
-                {
-                    display: flex;
-                    justify-content: space-around;
-                    margin: 5px;
-                }
-                & .sale-date-container
-                {
-                    display: flex;
-                    justify-content: space-around;
-                    margin: 5px;
-                }
+                & .total-pay
+                    {
+                        grid-column: 1 / 6;
+                    }
+                    & .quantity
+                    {
+                        grid-column: 6 / 10;
+                    }
+                    & .date
+                    {
+                        grid-column: 10 / 13;
+                    }  
+                    & .total-pay-value
+                    {
+                        display: flex;
+                        align-items: center;
+                        grid-column: 1 / 6;                        
+                        box-shadow: 0px 0.5px 0px var(--c-cian1);
+                    }
+                    & .quantity-value
+                    {
+                        display: flex;
+                        align-items: center;
+                        grid-column: 6 / 10;
+                        box-shadow: 0px 0.5px 0px var(--c-cian1);
+                    }
+                    & .date-value
+                    {
+                        display: flex;
+                        align-items: center;
+                        grid-column: 10 / 11;
+                        box-shadow: 0px 0.5px 0px var(--c-cian1);
+                    }
                 & .details-button-container
                 {
+                    grid-column: 11 / 13;
                     display: flex;
                     justify-content: center;
-                    margin: 5px;
+                    align-items: center;
+                    
+                    box-shadow: 0px 0.5px 0px var(--c-cian1);
                     & button
                     {
+                        margin: 5px;
                         border: none;
                         border-radius: 10px;                    
-                        height: 7vh;
-                        padding: 0px 2px;
+                        height: 5vh;        
+                        padding: 10px;                
                         background-color: var(--c-yellow1);
                         cursor: pointer;
 

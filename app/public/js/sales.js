@@ -35,73 +35,61 @@ function renderItemsAmount(productAmount)
 //CHAT CODE ---------------------------------------------------------------------------------------------------------
 
 function renderSaleCards(sales) {
-    const saleList = document.querySelector('.sale-list-container');
-    const fragment = document.createDocumentFragment();
+    // const saleList = document.querySelector('.sale-list-container');
+    // const fragment = document.createDocumentFragment();
+    // const saleContainer = document.createElement('section');
+    // saleContainer.classList.add('sale-container');
+    // saleList.appendChild(saleContainer);
+    // fragment.appendChild(saleContainer);
+    createSaleContainerHeader()
 
     sales.forEach(sale => {
-        const saleContainer = createSaleContainer(sale);
-        fragment.appendChild(saleContainer);
+        createSaleRow(sale);
+        console.log("Here");
     });
+    
 
-    saleList.appendChild(fragment);
+    
 }
 
-function createSaleContainer(sale) {
-    const saleContainer = document.createElement('section');
-    saleContainer.classList.add('sale-container');
+function createSaleRow(sale) {
+        
+    createSaleListContainerContent(sale)
 
-    const saleTotalContainer = createSaleTotalContainer(sale.totalPay);
-    saleContainer.appendChild(saleTotalContainer);
+    createDetailButtonContainer(sale.id);    
 
-    const saleProductQuantityContainer = createSaleProductQuantityContainer(sale.totalQuantity);
-    saleContainer.appendChild(saleProductQuantityContainer);
-
-    const saleDateContainer = createSaleDateContainer(sale.date);
-    saleContainer.appendChild(saleDateContainer);
-
-    const detailButtonContainer = createDetailButtonContainer(sale.id);    
-    saleContainer.appendChild(detailButtonContainer);
-
-    return saleContainer;
 }
 
-function createSaleTotalContainer(totalPay) {
-    const saleTotalContainer = document.createElement('section');
-    saleTotalContainer.classList.add('sale-total-container');
-    saleTotalContainer.innerHTML = "<h4>Total Pagado:</h4>";
-
-    const totalPayed = document.createElement('h4');
-    totalPayed.textContent = `$ ${formatNumber(totalPay)}`;
-    saleTotalContainer.appendChild(totalPayed);
-
-    return saleTotalContainer;
+function createSaleContainerHeader()
+{
+    const saleContainer = document.querySelector('.sale-container');
+    document.querySelector('.sale-list-container').style.display = "block";
+    console.log(saleContainer);
+    saleContainer.innerHTML = `
+        <p class="total-pay">Total</p>
+        <p class="quantity">Cantidad total de productos</p>
+        <p class="date">Fecha de emision</p>
+        `;
 }
-
-function createSaleProductQuantityContainer(totalQuantity) {
-    const saleProductQuantityContainer = document.createElement('section');
-    saleProductQuantityContainer.classList.add('sale-product-quantity-container');
-    saleProductQuantityContainer.innerHTML = "<h4>Cantidad total de productos:</h4>";
-
-    const totalQuantityElement = document.createElement('h4');
-    totalQuantityElement.textContent = totalQuantity;
-    saleProductQuantityContainer.appendChild(totalQuantityElement);
-
-    return saleProductQuantityContainer;
-}
-
-function createSaleDateContainer(date) {
-    const saleDateContainer = document.createElement('section');
-    saleDateContainer.classList.add('sale-date-container');
-    saleDateContainer.innerHTML = "<h4>Fecha:</h4>";
-
-    const dateElement = document.createElement('h4');
-    dateElement.textContent = date.slice(0, 10);
-    saleDateContainer.appendChild(dateElement);
-
-    return saleDateContainer;
+function createSaleListContainerContent(sale)
+{       
+    const saleContainer = document.querySelector('.sale-container');
+    let totalPay = document.createElement('p');
+    totalPay.classList.add('total-pay-value');
+    totalPay.innerHTML = `$${formatNumber(sale.totalPay)}`;
+    saleContainer.appendChild(totalPay);
+    let quantity = document.createElement('p');
+    quantity.classList.add('quantity-value');
+    quantity.innerHTML = `${sale.totalQuantity}`;
+    saleContainer.appendChild(quantity);
+    let date = document.createElement('p');
+    date.classList.add('date-value');
+    date.innerHTML = `${sale.date.slice(0, 10)}`;
+    saleContainer.appendChild(date);
 }
 
 function createDetailButtonContainer(saleId) {
+    const saleContainer = document.querySelector('.sale-container');
     const detailButtonContainer = document.createElement('section');
     detailButtonContainer.classList.add('details-button-container');
 
@@ -112,11 +100,9 @@ function createDetailButtonContainer(saleId) {
     });
 
     detailButtonContainer.appendChild(detailButton);
-
-    return detailButtonContainer;
+    saleContainer.appendChild(detailButtonContainer);    
 }
 
-//CHAT CODE ---------------------------------------------------------------------------------------------------------
 //Functionality
 function formatNumber(number) {
     return new Intl.NumberFormat('de-DE', {

@@ -8,46 +8,7 @@ let search;
 let currentOffset;
 //CHAT CODE -------------------------------------
 
-// script.js
-
-function initCarrousel()
-{
-    const carousel = document.querySelector('.item-section-content');
-    const items = document.querySelectorAll('.item-card');
-    const prevButton = document.querySelector('.carousel-control.prev');
-    const nextButton = document.querySelector('.carousel-control.next');
-    let currentIndex = 0;
-    const itemsPerView = 5; // Number of items to show per view
-    
-    function updateCarousel() {
-      const itemWidth = items[0].clientWidth + parseInt(getComputedStyle(carousel).columnGap);      
-      carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-    }
-  
-    prevButton.addEventListener('click', function () {
-      if (currentIndex > 0) {
-        currentIndex -= itemsPerView;
-      } else {
-        currentIndex = Math.floor((items.length - 1) / itemsPerView) * itemsPerView;
-      }
-      updateCarousel();
-    });
-  
-    nextButton.addEventListener('click', function () {
-      if (currentIndex < items.length - itemsPerView) {
-        currentIndex += itemsPerView;
-      } else {
-        
-        currentIndex = 0;
-      }
-      updateCarousel();
-    });
-  
-    // Update carousel on window resize
-    window.addEventListener('resize', updateCarousel);
-} 
-
-function reInitCarrousel()
+function InitCarrousel()
 {    
     const carousel = document.querySelector('.item-section-content');    
     const items = document.querySelectorAll('.item-card');
@@ -76,9 +37,6 @@ function reInitCarrousel()
     nextButton.style.display = 'block';
   }
   }
-  
-
-
   prevButton.addEventListener('click', function () {
     currentIndex -= itemsPerView;
     if (currentIndex < 0) {
@@ -118,7 +76,7 @@ function initPage()
         };
     createProductDetails();
     addListeners();
-    setTimeout(reInitCarrousel, 500);  
+    setTimeout(InitCarrousel, 500);  
 }
 
 function addListeners()
@@ -152,7 +110,8 @@ function renderModal()
     const modal = document.querySelector('.modal');
     const priceSectionHeader = document.querySelector('.price-section-header');
     const productNameContainer = document.querySelector('.product-name');
-    let productName = priceSectionHeader.firstChild.innerHTML;
+    let productName = priceSectionHeader.innerHTML;
+    console.log(productName);
     productNameContainer.innerHTML = productName;
     modal.style.display = 'block';
     window.onclick = function(event) {
@@ -188,7 +147,7 @@ async function createProductDetails() {
         fragment.appendChild(priceSectionContainer);
 
         document.querySelector('.product-container').appendChild(fragment);
-        createCarrousel(product.category.name);
+        createCarrousel(product.category.name, product.id);
         
 
         
@@ -249,34 +208,11 @@ function createPriceSectionContainer(product) {
     return priceSectionContainer;
 }
 
-// function createPriceSectionContent(name, price, discount)
-// {
-//     console.log("Here");
-//     const priceSectionContent = document.createElement('section');
-//     priceSectionContent.classList.add('price-section-content');
-//     if (discount > 0) {
-//         const actualPrice = price - (price * (discount / 100));
-//         priceSectionContent.innerHTML = `
-//         <h4 class="price-section-header">${name}</h4>
-//         <p class="price-without-discount">$${formatNumber(price)}</p>
-//         <section class="price-with-discount-container">
-//             <p>$${formatNumber(actualPrice)}</p><p class="percentage-off">${discount}% OFF</p>
-//         </section>
-//         `;        
-//     } else {
-//         priceSectionContent.innerHTML = `
-//         <h4 class="price-section-header">${name}</h4>
-//         <p class="price-without-discount">$${formatNumber(price)}</p>        
-//         `;
-//     }
-//     return priceSectionContent;
-// }
-
 function createPriceSectionHeader(name) {
     const priceSectionHeader = document.createElement('section');
     priceSectionHeader.classList.add('price-section-header');
     priceSectionHeader.innerHTML = `
-    <h4 class="price-section-header">${name}</h4>
+    <h4>${name}</h4>
     `;        
     return priceSectionHeader;
 }
@@ -316,10 +252,11 @@ function createPriceSectionBottom(productId) {
 }
 
 //CHAT CODE ---------------------------------------------------------------------------------------------------------
-async function createCarrousel(category)
+async function createCarrousel(category, id)
 {
-    let products = await fetchProductsByFilters(search, category, currentOffset);  
-    createCards(products);
+    let products = await fetchProductsByFilters(search, category, currentOffset); 
+    const productsWithoutTheDetailedProduct = products.filter(product => product.id !== id);     
+    createCards(productsWithoutTheDetailedProduct);
 }
 
 function createCards(products) {
