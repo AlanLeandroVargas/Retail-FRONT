@@ -40,6 +40,30 @@ function initPage()
     {            
         renderNoProducts();
     }
+    addListeners();
+}
+function addListeners()
+{
+    const searchBar = document.querySelector('#searchBar');
+    searchBar.addEventListener('keydown', (e) =>
+        {        
+            if(e.key == 'Enter')
+                {
+                    searchProduct(searchBar.value);                        
+                }                
+        });  
+}
+function searchProduct(search)
+{
+    let encodedUrl = encodeParams('/?', search)
+    window.open(encodedUrl, '_self'); 
+}
+function encodeParams(url, search, category = '%00', currentOffset = 0) {
+    const searchParams = new URLSearchParams();
+    searchParams.set('search', search);
+    searchParams.set('category', category);
+    searchParams.set('currentOffset', currentOffset);    
+    return `${url}${searchParams.toString()}`;
 }
 //Rendering
 function renderNoProducts()
@@ -181,17 +205,38 @@ function createProductQuantityPriceContainer(product, quantity) {
     const productQuantityPriceContainer = document.createElement('section');
     productQuantityPriceContainer.classList.add('quantity-price-container');
 
-    const productQuantityContainer = createProductQuantityContainer(product.id, quantity);
+    const productQuantityContainer = createProductQuantityContainer(product.id, quantity, product.price, product.discount);
     productQuantityPriceContainer.appendChild(productQuantityContainer);
 
-    const price = document.createElement('h3');
-    price.innerHTML = `$ ${formatNumber(product.price)}`;
-    productQuantityPriceContainer.appendChild(price);
-
+    const priceSection = document.createElement('section');
+    priceSection.classList.add("price-section");
+    priceSection.classList.add(`price-${product.id}`);
+    if(product.discount > 0)
+        {            
+            const priceWithoutDiscountSection = document.createElement('section');
+            priceWithoutDiscountSection.classList.add("price-without-discount-section");
+            priceWithoutDiscountSection.innerHTML = `
+            <p class="price-without-discount">$${formatNumber(product.price * quantity)}</p>
+            <p class="discount">%${product.discount} off</p>
+            `;
+            priceSection.appendChild(priceWithoutDiscountSection);
+            const price = document.createElement('section');
+            let priceDiscounted = (product.price * quantity) - ((product.price * quantity)* (product.discount / 100))
+            price.innerHTML = `<h3 class="price">$${formatNumber(priceDiscounted)}</h3>`;
+            priceSection.appendChild(price);
+            productQuantityPriceContainer.appendChild(priceSection);
+        }    
+    else
+    {
+        const price = document.createElement('section');
+        price.innerHTML = `<h3>${formatNumber(product.price * quantity)}</h3>`;
+        priceSection.appendChild(price);
+        productQuantityPriceContainer.appendChild(price);
+    }
     return productQuantityPriceContainer;
 }
 
-function createProductQuantityContainer(productId, quantity) {
+function createProductQuantityContainer(productId, quantity, price, discount) {
     const productQuantityContainer = document.createElement('section');
     productQuantityContainer.classList.add('quantity-container');
 
@@ -201,6 +246,7 @@ function createProductQuantityContainer(productId, quantity) {
     increaseBtn.addEventListener('click', () => addProductToCart(productId));
     increaseBtn.addEventListener('click', () => updateProductQuantities(productId, true, 1));
     increaseBtn.addEventListener('click', () => updateSummaryTotal());
+    increaseBtn.addEventListener('click', () => updateProductPrices(productId, price, discount));
 
     const quantitySpan = document.createElement('span');
     quantitySpan.classList.add(`quantity-${productId}`);
@@ -212,6 +258,7 @@ function createProductQuantityContainer(productId, quantity) {
     decreaseBtn.addEventListener('click', () => decreaseProductFromCart(productId));
     decreaseBtn.addEventListener('click', () => updateProductQuantities(productId, false, 1));
     decreaseBtn.addEventListener('click', () => updateSummaryTotal());
+    decreaseBtn.addEventListener('click', () => updateProductPrices(productId, price, discount));
     if (quantity <= 1) {
         decreaseBtn.disabled = true;
     }
@@ -300,7 +347,11 @@ function updateSummaryQuantities(add, amount)
 }
 function updateProductsList(productId)
 {
+    console.log("FIRING UPDATE");     
     const {isThereProductsLeft, amount} = deleteProductFromCart(productId)
+    let storedUserShoppingCart = getCookie('shoppingCart');
+    let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
+    let shoppingCart = parsedStoredUserShoppingCart;   
     if(isThereProductsLeft)
         {
             updateSummaryQuantities(false, amount);
@@ -308,9 +359,35 @@ function updateProductsList(productId)
     else
     {
         renderNoProducts();
-    }
-    renderItemsAmount(amount);
+    }    
+    updateSummaryTotal();
     deleteProductCard(productId)
+    renderItemsAmount(shoppingCart.products.length);
+}
+
+function updateProductPrices(productId, price, discount)
+{
+    const priceSection = document.querySelector(`.price-${productId}`);
+    const quantity = document.querySelector(`.quantity-${productId}`).innerHTML;
+    const quantityNumber = parseInt(quantity);
+    const priceWithoutDiscountSection = priceSection.firstChild;
+    if(priceWithoutDiscountSection)
+        {
+            const priceTotal = priceSection.lastChild;            
+            priceWithoutDiscountSection.innerHTML = `
+            <p class="price-without-discount">$${formatNumber(price * quantityNumber)}</p>
+            <p class="discount">%${discount} off</p>
+            `;
+            let priceDiscounted = (price * quantityNumber) - ((price * quantityNumber)* (discount / 100))
+            priceTotal.innerHTML = `<h3 class="price">$${formatNumber(priceDiscounted)}</h3>`;
+        }
+    else
+    {
+        const priceTotal = priceSection.firstChild;
+        priceTotal.innerHTML = `<h3 class="price">$${formatNumber(price * quantity)}</h3>`;
+    }
+    console.log(priceSection);
+    console.log(quantityNumber);
 }
 function deleteProductCard(productId)
 {

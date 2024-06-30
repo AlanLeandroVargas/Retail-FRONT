@@ -10,7 +10,7 @@
     
     border-radius: 10px;
     padding: 2vw; 
-    margin: 8vh 2vw;
+    margin: 8vh 1vw;
     width: 92vw;
     height: 65vh; 
     background-color: var(--c-white1);  
@@ -102,12 +102,18 @@
                         width: 14vw;
                         height: 5vh;
                         padding: 20px;
-                        text-overflow: ellipsis;            
+                        text-overflow: ellipsis;   
+                        & p
+                        {
+                            font-size: 0.9rem;
+                            font-weight: bold;
+                        }         
                     }
                     & .price-and-cart-container
                     {
                         display: flex;
                         justify-content: space-between;
+                        margin-top: 2vh;
                         & .price-container
                         {
                             padding-left: 20px;
@@ -130,7 +136,7 @@
                                 {
                                     margin-left: 10px;
                                     color: rgb(6, 184, 6);
-                                    font-size: 0.8rem;
+                                    font-size: 1rem;
                                 }
                             }
                         }
@@ -186,9 +192,7 @@ main
         display: flex;
         background-color: var(--c-white1);
         border-radius: 10px; 
-        margin: 8vh;
-        margin-left: 2vw;
-        margin-right: 2vw;
+        margin: 8vh 1vw;
         width: 96vw;
 
         grid-column: 1 / 13;      
@@ -228,15 +232,15 @@ main
             margin: 2vh 2vw;
             border-radius: 10px;                                    
             box-shadow: 0px 0px 2.5px var(--c-cian1);
-            width: 35vw;
-            height: 45vh;    
+            width: 27vw;
+            height: 35vh;    
             & .price-section-header
             {
                 display: flex;
                 justify-content: center;
-                height: 15vh;
-                margin-top: 10px;
-                margin-bottom: 10px;                
+                height: 10vh;
+                margin-top: 10px;   
+                margin-bottom: 10px;                            
                 & h4
                 {
                     margin: 0px 25px;

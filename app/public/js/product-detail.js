@@ -15,10 +15,10 @@ function InitCarrousel()
     const prevButton = document.querySelector('.carousel-control.prev');
     const nextButton = document.querySelector('.carousel-control.next');
     let currentIndex = 0;
-    const itemsPerView = 4; // Number of items to show per view
+    const itemsPerView = 3; // Number of items to show per view
 
     function updateCarousel() {
-    
+    console.log("WORKING");
     const itemWidth = items[0].clientWidth + parseInt(getComputedStyle(carousel).columnGap);
     const maxIndex = Math.max(0, items.length - itemsPerView); // Ensure we don't go below 0
     currentIndex = Math.min(currentIndex, maxIndex); // Prevents the index from going out of range
@@ -31,7 +31,7 @@ function InitCarrousel()
     prevButton.style.display = 'block';
   }
 
-  if (currentIndex >= items.length - (itemsPerView + 1)) {
+  if (currentIndex >= items.length - (itemsPerView + 2)) {
     nextButton.style.display = 'none';
   } else {
     nextButton.style.display = 'block';
@@ -230,8 +230,9 @@ function createPriceSectionContainer(product) {
 function createPriceSectionHeader(name) {
     const priceSectionHeader = document.createElement('section');
     priceSectionHeader.classList.add('price-section-header');
+    const truncatedName = name.length > 42 ? `${name.slice(0, 42)}...` : name;
     priceSectionHeader.innerHTML = `
-    <h4>${name}</h4>
+    <h4>${truncatedName}</h4>
     `;        
     return priceSectionHeader;
 }
@@ -317,7 +318,7 @@ function createProductName(name) {
     const truncatedName = name.length > 42 ? `${name.slice(0, 42)}...` : name;
     return `
         <section class="name-container">
-            <h5>${truncatedName}</h5>
+            <p>${truncatedName}</p>
         </section>
     `;
 }

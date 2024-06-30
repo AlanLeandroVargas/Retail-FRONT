@@ -103,7 +103,7 @@ function createProductName(name) {
     const truncatedName = name.length > 42 ? `${name.slice(0, 42)}...` : name;
     return `
         <section class="name-container">
-            <h5>${truncatedName}</h5>
+            <p>${truncatedName}</p>
         </section>
     `;
 }
@@ -197,29 +197,60 @@ function previousPage(search = '%00')
 }
 //Rendering - CardCreation
 async function createItemSection(search = '%00', category = '%00', currentOffset = 0)
-{    
-    console.log("Firing");
-    fetchByPromises(search, category, currentOffset);
-    // let products = await fetchProductsByFilters(search, category, currentOffset);    
-    // createCards(products);
+{        
+    // fetchByPromises(search, category, currentOffset);
+    let products = await fetchProductsByFilters(search, category, currentOffset); 
+    toggleSpinner(); 
+    if(products.length > 0)
+        {
+            createCards(products);
+        }
+    else
+    {
+        noProduct();
+    }        
 }
 
-function fetchByPromises(search, category, currentOffset)
+function noProduct()
 {
-    document.getElementById('loading-spinner').style.display = 'flex';
-    fetch
-            (`https://localhost:7230/api/Product?name=${search}&category=${category}&offset=${currentOffset}&limit=12`)
-    .then(response => response.json())
-    .then(data => {createCards(data)})
-    .catch(error => 
+    const itemSection = document.querySelector('.item-section-content');    
+    const filterSection = document.querySelector('.filter-section');
+    const main = document.querySelector('main');
+    const noProductsFound = document.createElement('section');
+    noProductsFound.classList.add('no-products');
+    filterSection.style.display = 'none';
+    itemSection.style.display = 'none';
+    noProductsFound.innerHTML = `
+    <p>No se han encontrado resultados que coincidan con tu búsqueda</p>
+    <ul>
+        <li>Verificá la ortografía de las palabras</li>
+        <li>Intentá utilizar una sola palabra</li>
+        <li>Escribí sinónimos</li>
+    </ul>
+    `;
+    const button = document.createElement('button');
+    button.classList.add("home-btn");
+    button.innerHTML = "Ir al inicio";
+    button.addEventListener('click', () => 
         {
-            console.log('Error fetching products', error);
+            window.open('./', '_self');
         })
-    .finally(() => 
+    noProductsFound.appendChild(button);
+    main.style.height = '60vh';
+    main.append(noProductsFound);
+
+}
+function toggleSpinner()
+{
+    const spinner = document.getElementById('loading-spinner');
+    if(spinner.style.display == 'none')
         {
-            document.getElementById('loading-spinner').style.display = 'none';
-            // document.querySelectorAll('.item-section-content').style.display = 'block';
-        })
+            spinner.style.display = 'flex';
+        }
+    else
+    {
+        spinner.style.display = 'none';
+    }
 }
 
 //Redirectioning
