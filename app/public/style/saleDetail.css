@@ -13,7 +13,7 @@ main
         & .sale-detail-header
         {        
             display: grid;
-            grid-template-columns: repeat(12, 150px);  
+            grid-template-columns: repeat(12, 135px);  
             padding: 10px;
             column-gap: 12px;
             & p
@@ -57,7 +57,7 @@ main
             & .item-row-content
             {
                 display: grid;
-                grid-template-columns: repeat(12, 150px);
+                grid-template-columns: repeat(12, 135px);
                 box-shadow: 0px 0.5px 0.5px var(--c-cian1);
                 margin-top: 1vh;
                 column-gap: 12px;

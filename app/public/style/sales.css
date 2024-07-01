@@ -91,7 +91,7 @@ main
                 margin: 2vh 5vh;
                 padding: 20px;
                 display: grid;
-                grid-template-columns: repeat(12, 160px);
+                grid-template-columns: repeat(12, 145px);
                 & p
                 {
                     font-size: 1.4rem;
@@ -121,7 +121,7 @@ main
                 {
                     grid-column: 1 / 14;
                     display: grid;
-                    grid-template-columns: repeat(12, 160px);
+                    grid-template-columns: repeat(12, 145px);
                     & .item-value
                     {
                         display: flex;
@@ -188,7 +188,7 @@ main
                 & .pagination-container
                 {
                     display: grid;
-                    grid-template-columns: repeat(12, 160px);
+                    grid-template-columns: repeat(12, 145px);
                     & .pagination-counter
                     {
                         margin-top: 2vh;
