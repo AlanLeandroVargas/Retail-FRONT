@@ -2,7 +2,7 @@ main
 {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(4, auto);
+    grid-template-rows: repeat(4, auto);    
     & .sale-detail-container
     {
         border-radius: 10px;
@@ -13,9 +13,13 @@ main
         & .sale-detail-header
         {        
             display: grid;
-            grid-template-columns: repeat(12, 90px);  
+            grid-template-columns: repeat(12, 150px);  
             padding: 10px;
             column-gap: 12px;
+            & p
+            {
+                font-size: 1.4rem;
+            }
             & .product-item
                 {                    
                     grid-column: 1 / 2;
@@ -53,13 +57,13 @@ main
             & .item-row-content
             {
                 display: grid;
-                grid-template-columns: repeat(12, 90px);
+                grid-template-columns: repeat(12, 150px);
                 box-shadow: 0px 0.5px 0.5px var(--c-cian1);
                 margin-top: 1vh;
                 column-gap: 12px;
                 & p
                 {
-                    margin: 1px;
+                    font-size: 1.4rem;
                 }
                 .truncated {
                     white-space: nowrap;
@@ -124,6 +128,10 @@ main
                 width: 100%;
                 box-shadow: 0px 0.5px 0.5px var(--c-cian1);
             }
+            & p
+                {
+                    font-size: 1.4rem;
+                }
                     
         }
     }

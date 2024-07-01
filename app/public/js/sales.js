@@ -92,7 +92,7 @@ function renderItemsAmount(productAmount)
     
 }
 function renderSalesContainer(from, to)
-{
+{    
     renderTitle(from, to);
     createSaleContainerHeader();
     createSaleContainerContent();
@@ -126,13 +126,13 @@ function createPaginationCounter()
     const paginationContainer = document.querySelector('.pagination-container');
     const paginationCounter = document.createElement('section');    
     paginationCounter.classList.add('pagination-counter');
-    paginationCounter.innerHTML = `Pagina: ${currentPage}`;
+    paginationCounter.innerHTML = `<p>Pagina: ${currentPage}</p>`;
     paginationContainer.appendChild(paginationCounter);
 }
 function updatePaginationCounter()
 {
     const paginationCounter = document.querySelector('.pagination-counter');
-    paginationCounter.innerHTML = `Pagina: ${currentPage}`;
+    paginationCounter.innerHTML = `<p>Pagina: ${currentPage}</p>`;
 }
 function createPaginationButtons()
 {

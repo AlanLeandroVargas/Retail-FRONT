@@ -230,7 +230,7 @@ function createPriceSectionHeader(name) {
     priceSectionHeader.classList.add('price-section-header');
     const truncatedName = name.length > 42 ? `${name.slice(0, 42)}...` : name;
     priceSectionHeader.innerHTML = `
-    <h4>${truncatedName}</h4>
+    <h2>${truncatedName}</h2>
     `;        
     return priceSectionHeader;
 }

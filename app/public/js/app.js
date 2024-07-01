@@ -222,7 +222,7 @@ function noProduct()
     filterSection.style.display = 'none';
     itemSection.style.display = 'none';
     noProductsFound.innerHTML = `
-    <p>No se han encontrado resultados que coincidan con tu búsqueda</p>
+    <h1>No se han encontrado resultados que coincidan con tu búsqueda</h1>
     <ul>
         <li>Verificá la ortografía de las palabras</li>
         <li>Intentá utilizar una sola palabra</li>

@@ -12,7 +12,7 @@
     padding: 2vw; 
     margin: 8vh 1vw;
     width: 92vw;
-    height: 65vh; 
+    height: 60vh; 
     background-color: var(--c-white1);  
         
     grid-column: 1 / 13;
@@ -31,6 +31,7 @@
 {
     & h1
     {
+        font-size: 2rem;
         margin-left: 2vw;
     }
 }
@@ -42,11 +43,11 @@
     background-color: var(--c-yellow1);
     border: none;
     border-radius: 100px;
-    height: 50px;
-    width: 50px;
+    height: 75px;
+    width: 75px;
     padding: 10px;
     cursor: pointer;
-    font-size: 25px;
+    font-size: 1.9rem;
     z-index: 1;
 }
 .carousel-control:hover
@@ -74,7 +75,7 @@
                 display: flex;
                 flex-direction: column;                
                 border-radius: 10px;
-                height: 65vh;
+                height: 60vh;
                 width: 18vw;
                 border: 0.25px solid var(--c-cian1);
                 overflow: hidden;
@@ -110,7 +111,7 @@
                         text-overflow: ellipsis;   
                         & p
                         {
-                            font-size: 0.9rem;
+                            font-size: 1.3rem;
                             font-weight: bold;
                         }         
                     }
@@ -123,25 +124,25 @@
                         {
                             padding-left: 20px;
                             padding-top: 10px;
-                            & p 
-                            {                
-                                font-size: 1.3rem;
-                            }   
                             & .price-without-discount
                             {
                                 color: rgba(0, 0, 0, .55);
-                                font-size: 0.9rem;
+                                font-size: 1.1rem;
                                 text-decoration: line-through;
                             }
                             & .price-with-discount-container
                             {
                                 display: flex;
                                 align-items: center;
+                                & p 
+                                {                
+                                    font-size: 1.6rem;
+                                } 
                                 & .percentage-off
                                 {
                                     margin-left: 10px;
                                     color: rgb(6, 184, 6);
-                                    font-size: 1rem;
+                                    font-size: 1.4rem;
                                 }
                             }
                         }
@@ -227,6 +228,10 @@ main
             & .product-detail-container-content
             {                
                 margin-top: 1vh;
+                & p
+                {
+                    font-size: 1.4rem;
+                }
             }
         }
         & .price-section-container
@@ -244,39 +249,36 @@ main
                 display: flex;
                 justify-content: center;
                 height: 10vh;
-                margin-top: 10px;   
-                margin-bottom: 10px;                            
-                & h4
+                /* margin-top: 10px;   
+                margin-bottom: 10px;                             */
+                margin: 2vh;
+                /* & h2
                 {
                     margin: 0px 25px;
-                }
+                } */
             }
             & .price-section-content
             {                
                 margin-left: 25px;
-                & p
-                {
-                    font-size: 1.3rem;
-                }
                 & .price-without-discount
                 {
                     color: rgba(0, 0, 0, .55);
-                    font-size: 0.8rem;
+                    font-size: 1.1rem;
                     text-decoration: line-through;
-                }
+                }                
                 & .price-with-discount-container
                 {
                     display: flex;
                     align-items: center; 
                     & p
                     {
-                        font-size: 1.5rem;
+                        font-size: 1.8rem;
                     }                   
                     & .percentage-off
                     {
                         margin-left: 10px;
                         color: rgb(6, 184, 6);
-                        font-size: 1rem;
+                        font-size: 1.4rem;
                     }
                 }
             }            
@@ -295,7 +297,7 @@ main
                         background-color: var(--c-yellow1);
                         border: none;
                         cursor: pointer;
-    
+                        font-size: 1.4rem;
                         &:hover
                         {
                             background-color: var(--c-yellow2);
@@ -324,13 +326,24 @@ main
         background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
         & .modal-content
         {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             border-radius: 10px;
             background-color: #fefefe;
             margin: 15% auto; /* 15% from the top and centered */
             padding: 20px;
             border: 1px solid #888;
             width: 50vw; /* Could be more or less, depending on screen size */
-                        
+            
+            & .title
+            {
+                font-size: 2rem;
+            }
+            & .unit
+            {
+                font-size: 1.3rem;
+            }
             & .shopping-cart-btn-container
             {
                 display: flex;
@@ -340,10 +353,12 @@ main
                     
                     border: none;
                     border-radius: 50px;                    
-                    height: 7vh;           
-                    width: 7vw;                          
+                    height: 6vh;           
+                    width: 7vw;     
+                    margin-top: 10px;                     
                     background-color: var(--c-yellow1);
-                    cursor: pointer;                   
+                    cursor: pointer;        
+                    font-size: 1.3rem;           
                     &:hover
                     {
                         background-color: var(--c-yellow2);

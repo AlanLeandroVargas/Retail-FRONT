@@ -50,6 +50,11 @@ async function renderItems(saleDetail) {
 
     const products = saleDetail.products;
 
+    if(products.length == 1)
+        {
+            const main = document.querySelector('main');
+            main.style.height = '50vh';
+        }
     for (const product of products) {
         try {
             const productData = await fetchProductById(product.productId);

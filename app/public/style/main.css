@@ -44,8 +44,8 @@ header
                 margin-left: 10px;                
                 & img
                 {                   
-                    height: 75px;
-                    width: 75px;
+                    height: 100px;
+                    width: 100px;
                 }
             }
         }   
@@ -57,7 +57,8 @@ header
             padding: 0.9vw;
             grid-column: 4 / 5;
             & .search-bar
-            {                                          
+            {                      
+                font-size: 1.4rem;                    
                 border-radius: 5px;
                 border-style: unset;                
                 outline: none;
@@ -77,6 +78,7 @@ header
                 {
                     text-decoration: none;
                     color: white;
+                    font-size: 1.4rem;
                 }
             }
         }
@@ -91,6 +93,7 @@ header
                 justify-content: center;
                 align-items: center;                
                 & i {
+                    transform: scale(1.5);
                     color: white;
                     transition: 0.25s;
 
@@ -104,14 +107,15 @@ header
                     display: none;
                     justify-content: center;
                     align-items: center;
-                    height: 20px;
-                    width: 20px;
+                    height: 30px;
+                    width: 30px;
                     background-color: red;
                     border-radius: 50px;
                     color: white;                    
                     position: absolute;
-                    top: 15px;
-                    right: 45px;
+                    top: 36px;
+                    right: 67px;
+                    font-size: 1.4rem;
                 }                          
             }
         }

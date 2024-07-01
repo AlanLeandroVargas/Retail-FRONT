@@ -16,14 +16,13 @@ main
         border-radius: 10px;
         padding: 45px;
         margin-top: 10vh;     
-        & p
+        & h1
         {
-            font-size: 1.4rem;
             margin-bottom: 10px;
         }   
         & ul
         {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             margin-top: 15px;
         }
         & .home-btn
@@ -38,7 +37,7 @@ main
             margin-top: 30px;
             background-color: var(--c-yellow1);
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.4rem;
             &:hover
             {
                 background-color: var(--c-yellow2);
@@ -142,7 +141,7 @@ main
                 display: flex;
                 flex-direction: column;
                 border-radius: 10px;
-                height: 65vh;
+                height: 60vh;
                 width: 18vw;
                 border: 0.25px solid var(--c-cian1);
                 overflow: hidden;
@@ -179,7 +178,7 @@ main
                         
                         & p
                         {
-                            font-size: 0.9rem;
+                            font-size: 1.3rem;
                             font-weight: bold;
                         }
                     }
@@ -191,26 +190,26 @@ main
                         & .price-container
                         {
                             padding-left: 20px;
-                            padding-top: 10px;
-                            & p 
-                            {                
-                                font-size: 1.3rem;
-                            }   
+                            padding-top: 10px;                             
                             & .price-without-discount
                             {
                                 color: rgba(0, 0, 0, .55);
-                                font-size: 0.9rem;
+                                font-size: 1.1rem;
                                 text-decoration: line-through;
                             }
                             & .price-with-discount-container
                             {
                                 display: flex;
                                 align-items: center;
+                                & p 
+                                {                
+                                    font-size: 1.6rem;
+                                }  
                                 & .percentage-off
                                 {
                                     margin-left: 10px;
                                     color: rgb(6, 184, 6);
-                                    font-size: 1rem;
+                                    font-size: 1.4rem;
                                 }
                             }
                         }
@@ -262,6 +261,7 @@ main
                 {
                     border: none;
                     margin: 20px;
+                    
                 }
             }
         }        
@@ -282,7 +282,7 @@ main
         padding: 10px; 
         background-color: var(--c-yellow1);
         cursor: pointer;
-        
+        font-size: 1.4rem;
         &:hover
         {
         background-color: var(--c-yellow2);

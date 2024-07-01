@@ -189,7 +189,7 @@ function createProductNameContainer(name, id) {
     productNameContainer.classList.add('product-name-container');
     const productLink = document.createElement('a');
     productLink.href = `./product_detail?value=${id}`
-    const productName = document.createElement('h3');
+    const productName = document.createElement('h2');
     productName.innerHTML = name;
     productLink.appendChild(productName);
     productNameContainer.appendChild(productLink);
@@ -227,14 +227,14 @@ function createProductQuantityPriceContainer(product, quantity) {
             priceSection.appendChild(priceWithoutDiscountSection);
             const price = document.createElement('section');
             let priceDiscounted = (product.price * quantity) - ((product.price * quantity)* (product.discount / 100))
-            price.innerHTML = `<h3 class="price">$${formatNumber(priceDiscounted)}</h3>`;
+            price.innerHTML = `<p class="price"><b>$${formatNumber(priceDiscounted)}</b></p>`;
             priceSection.appendChild(price);
             productQuantityPriceContainer.appendChild(priceSection);
         }    
     else
     {
         const price = document.createElement('section');
-        price.innerHTML = `<h3>${formatNumber(product.price * quantity)}</h3>`;
+        price.innerHTML = `<p>${formatNumber(product.price * quantity)}</p>`;
         priceSection.appendChild(price);
         productQuantityPriceContainer.appendChild(price);
     }
@@ -299,7 +299,7 @@ async function renderSummary()
     const parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);  
     const productsAndQuantities = await fetchProductsById(parsedStoredUserShoppingCart);
     const total = await ComputeAll(productsAndQuantities);    
-    priceTotal.innerHTML = total;
+    priceTotal.innerHTML = `<b>$${total}</b>`;
     const quantity = computeQuantity(productsAndQuantities);
     productQuantity.innerHTML = quantity;
 }
@@ -310,7 +310,7 @@ async function updateSummaryTotal()
     const priceTotal = document.querySelector('.price-total-value');
     const productsAndQuantities = await fetchProductsById(parsedStoredUserShoppingCart);
     const total = await ComputeAll(productsAndQuantities);    
-    priceTotal.innerHTML = total;
+    priceTotal.innerHTML = `<b>$${total}</b>`;
 }
 function updateProductQuantities(productId, add, amount)
 {                
