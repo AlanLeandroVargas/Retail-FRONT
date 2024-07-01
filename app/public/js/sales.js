@@ -33,32 +33,20 @@ function renderItemsAmount(productAmount)
     
 }
 
-//CHAT CODE ---------------------------------------------------------------------------------------------------------
-
-function renderSaleCards(sales) {
-    // const saleList = document.querySelector('.sale-list-container');
-    // const fragment = document.createDocumentFragment();
-    // const saleContainer = document.createElement('section');
-    // saleContainer.classList.add('sale-container');
-    // saleList.appendChild(saleContainer);
-    // fragment.appendChild(saleContainer);
+function renderSaleCards(sales, from, to) {
+    console.log("Dates");
+    console.log(from);
+    console.log(to);
+    createTitle(from, to)
     createSaleContainerHeader()
-
     sales.forEach(sale => {
         createSaleRow(sale);
-        console.log("Here");
     });
-    
-
-    
 }
 
 function createSaleRow(sale) {
-        
     createSaleListContainerContent(sale)
-
     createDetailButtonContainer(sale.id);    
-
 }
 
 function createSaleContainerHeader()
@@ -72,8 +60,32 @@ function createSaleContainerHeader()
         <p class="total-pay">Total</p>
         `;
 }
+function createTitle(from, to)
+{
+    const saleSection = document.querySelector('.sales-section');
+    const title = document.createElement('section');
+    title.classList.add('title');    
+    title.innerHTML = selectTitle(from, to);
+    saleSection.prepend(title);
+}
+function selectTitle(from, to)
+{
+    if(from == "" && to == "")
+        {
+            return `<h1>Todas las ventas</h1>`;
+        }
+    if(from == "")
+        {
+            return `<h1>Ventas hasta &nbsp ${to}</h1>`;
+        }
+    if(to == "")
+        {
+            return `<h1>Ventas desde &nbsp ${from}</h1>`;
+        }    
+    return `<h1>Ventas desde &nbsp ${from} &nbsp hasta &nbsp ${to}</h1>`
+}
 function createSaleListContainerContent(sale)
-{       
+{           
     const saleContainer = document.querySelector('.sale-container');
     let date = document.createElement('p');
     date.classList.add('date-value');
@@ -134,9 +146,9 @@ async function searchSales()
     toggleSpinner();
     let from = document.querySelector('#initialDate').value;
     let to = document.querySelector('#finalDate').value;    
-    let sales = await fetchSales(from, to);
+    let sales = await fetchSales(from, to);    
     toggleSpinner();
-    renderSaleCards(sales);
+    renderSaleCards(sales, from, to);
 }
 
 function toggleSearchBox()

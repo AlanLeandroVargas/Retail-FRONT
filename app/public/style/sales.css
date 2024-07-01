@@ -34,6 +34,13 @@ main
         height: 100%;
         grid-template-columns: repeat(12, 1fr);
         grid-template-rows: repeat(4, auto);
+        & .title
+        {
+            display: flex;
+            justify-content: center;
+            margin-top: 2vh;
+            grid-column: 1 / 13;
+        }
         & .sale-list-container
         {            
             display: none;
@@ -43,7 +50,7 @@ main
                 border-radius: 10px;
                 background-color: var(--c-white1);
                 width: 100%;
-                margin: 5vh;
+                margin: 2vh 5vh;
                 padding: 20px;
                 display: grid;
                 grid-template-columns: (12, 1fr);
