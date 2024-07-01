@@ -18,7 +18,6 @@ function InitCarrousel()
     const itemsPerView = 3; // Number of items to show per view
 
     function updateCarousel() {
-    console.log("WORKING");
     const itemWidth = items[0].clientWidth + parseInt(getComputedStyle(carousel).columnGap);
     const maxIndex = Math.max(0, items.length - itemsPerView); // Ensure we don't go below 0
     currentIndex = Math.min(currentIndex, maxIndex); // Prevents the index from going out of range
@@ -130,7 +129,6 @@ function renderModal()
     const priceSectionHeader = document.querySelector('.price-section-header');
     const productNameContainer = document.querySelector('.product-name');
     let productName = priceSectionHeader.innerHTML;
-    console.log(productName);
     productNameContainer.innerHTML = productName;
     modal.style.display = 'block';
     window.onclick = function(event) {

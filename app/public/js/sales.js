@@ -43,7 +43,6 @@ async function searchSales()
     {        
         renderSalesContainer(from, to);
         renderSalesContent(salesCopy.slice(currentIndex, 5));
-        console.log(sales);
     }
 }
 
@@ -215,7 +214,6 @@ function createSaleContainerHeader()
 {
     const saleContainer = document.querySelector('.sale-container');
     document.querySelector('.sale-list-container').style.display = "block";
-    console.log(saleContainer);
     saleContainer.innerHTML = `
         <p class="item">Item</p>
         <p class="date">Fecha de emision</p>

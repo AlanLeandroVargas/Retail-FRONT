@@ -290,8 +290,8 @@ async function renderSummary()
     const priceTotal = document.querySelector('.price-total-value');
     const productQuantity = document.querySelector('.price-product-quantity');   
     const buyBtn = document.getElementById('buy-btn');
-    buyBtn.addEventListener('click', () => {
-        buyShoppingCart();
+    buyBtn.addEventListener('click', async function(){
+        await buyShoppingCart();
         renderItemsAmount(0);
         renderModal();;
     }); 
@@ -391,8 +391,6 @@ function updateProductPrices(productId, price, discount)
         const priceTotal = priceSection.firstChild;
         priceTotal.innerHTML = `<h3 class="price">$${formatNumber(price * quantity)}</h3>`;
     }
-    console.log(priceSection);
-    console.log(quantityNumber);
 }
 function deleteProductCard(productId)
 {
