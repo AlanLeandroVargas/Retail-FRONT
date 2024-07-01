@@ -67,26 +67,26 @@ function createSaleContainerHeader()
     document.querySelector('.sale-list-container').style.display = "block";
     console.log(saleContainer);
     saleContainer.innerHTML = `
-        <p class="total-pay">Total</p>
-        <p class="quantity">Cantidad total de productos</p>
         <p class="date">Fecha de emision</p>
+        <p class="quantity">Cantidad total de productos</p>
+        <p class="total-pay">Total</p>
         `;
 }
 function createSaleListContainerContent(sale)
 {       
     const saleContainer = document.querySelector('.sale-container');
+    let date = document.createElement('p');
+    date.classList.add('date-value');
+    date.innerHTML = `${sale.date.slice(0, 10)}`;  
+    saleContainer.appendChild(date);  
+    let quantity = document.createElement('p');
+    quantity.classList.add('quantity-value');
+    quantity.innerHTML = `${sale.totalQuantity}`;
+    saleContainer.appendChild(quantity);        
     let totalPay = document.createElement('p');
     totalPay.classList.add('total-pay-value');
     totalPay.innerHTML = `$${formatNumber(sale.totalPay)}`;
     saleContainer.appendChild(totalPay);
-    let quantity = document.createElement('p');
-    quantity.classList.add('quantity-value');
-    quantity.innerHTML = `${sale.totalQuantity}`;
-    saleContainer.appendChild(quantity);
-    let date = document.createElement('p');
-    date.classList.add('date-value');
-    date.innerHTML = `${sale.date.slice(0, 10)}`;
-    saleContainer.appendChild(date);
 }
 
 function createDetailButtonContainer(saleId) {

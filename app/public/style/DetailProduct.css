@@ -49,11 +49,16 @@
     font-size: 25px;
     z-index: 1;
 }
+.carousel-control:hover
+{
+    background-color: var(--c-yellow2);
+}
 .carousel-control:active
 {
     background-color: var(--c-blue1);
     color: var(--c-white1);
 }
+
 
 .carousel-control.prev {
     left: 10px;

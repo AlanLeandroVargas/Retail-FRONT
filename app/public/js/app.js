@@ -75,6 +75,7 @@ function createCards(products) {
     });
     itemSection.appendChild(fragment);
     createPaginationSection();
+    checkPagination(products.length);
 }
 
 function createCard(product) {
@@ -160,6 +161,20 @@ function createPaginationSection()
         })    
 }
 
+function checkPagination(productsAmount)
+{
+    const nextBtn = document.getElementById('next-btn');
+    const previousBtn = document.getElementById('previous-btn');
+    if(currentOffset == 0)
+        {
+            previousBtn.disabled = true;
+        };
+    if(productsAmount < 12)
+        {
+            nextBtn.disabled = true;
+        }
+}
+
 
 //Rendering - Paginado
 function searchProduct(search)
@@ -168,32 +183,18 @@ function searchProduct(search)
     window.open(encodedUrl, '_self'); 
 }
 function nextPage(search = '%00')
-{        
-    const cards = document.querySelectorAll('.item-card');
-    if(cards.length < 12)
-        {
-            alert("You cant do that");
-        }
-    else
-    {
-        currentOffset = parseInt(currentOffset) + 12;         
-        let encodedUrl = encodeParams(indexUrl, search, category, currentOffset)
-        window.open(encodedUrl, '_self');  
-    }      
+{            
+    currentOffset = parseInt(currentOffset) + 12;         
+    let encodedUrl = encodeParams(indexUrl, search, category, currentOffset)
+    window.open(encodedUrl, '_self');      
 }
 function previousPage(search = '%00')
 {
-    if (currentOffset <= 0)
-        {
-            alert("You cant do that");
-        }
-    else
-    {
-        currentOffset = parseInt(currentOffset) - 12;    
-        let encodedUrl = encodeParams(indexUrl, search, category, currentOffset)
-        window.open(encodedUrl, '_self');
-    }
-    
+
+    currentOffset = parseInt(currentOffset) - 12;    
+    let encodedUrl = encodeParams(indexUrl, search, category, currentOffset)
+    window.open(encodedUrl, '_self');
+
 }
 //Rendering - CardCreation
 async function createItemSection(search = '%00', category = '%00', currentOffset = 0)
@@ -297,7 +298,7 @@ function filterByCategory(categoryName, search = '%00')
         }
     else
     {
-        let encodedUrl = encodeParams(indexUrl, search, categoryName, currentOffset)
+        let encodedUrl = encodeParams(indexUrl, search, categoryName, 0)
         window.open(encodedUrl, '_self');    
     }    
 }

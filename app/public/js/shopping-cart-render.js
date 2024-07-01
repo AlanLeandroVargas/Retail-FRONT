@@ -72,6 +72,8 @@ function renderNoProducts()
     const productList = document.querySelector('.product-list-section');
     const noProduct = document.querySelector('.no-product');
     const btn = document.querySelector('.home-btn');
+    const main = document.querySelector('main');
+    main.style.height = '64vh';
     btn.addEventListener('click', () => 
         {
             window.open('/', '_self');
@@ -170,7 +172,7 @@ function createProductInformationContainer(product, quantity) {
     const productInformationContainer = document.createElement('section');
     productInformationContainer.classList.add('product-information-container');
 
-    const productNameContainer = createProductNameContainer(product.name);
+    const productNameContainer = createProductNameContainer(product.name, product.id);
     productInformationContainer.appendChild(productNameContainer);
 
     const productBtnContainer = createProductBtnContainer(product.id);
@@ -182,12 +184,15 @@ function createProductInformationContainer(product, quantity) {
     return productInformationContainer;
 }
 
-function createProductNameContainer(name) {
+function createProductNameContainer(name, id) {
     const productNameContainer = document.createElement('section');
     productNameContainer.classList.add('product-name-container');
+    const productLink = document.createElement('a');
+    productLink.href = `./product_detail?value=${id}`
     const productName = document.createElement('h3');
     productName.innerHTML = name;
-    productNameContainer.appendChild(productName);
+    productLink.appendChild(productName);
+    productNameContainer.appendChild(productLink);
     return productNameContainer;
 }
 

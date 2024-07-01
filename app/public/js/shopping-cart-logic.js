@@ -9,6 +9,7 @@ function formatNumber(number) {
 }
 async function buyShoppingCart()
 {
+    console.log("BUYING");
     const storedUserShoppingCart = getCookie('shoppingCart');
     const parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);  
     const products = parsedStoredUserShoppingCart.products;    

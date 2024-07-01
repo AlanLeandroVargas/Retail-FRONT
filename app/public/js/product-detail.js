@@ -203,7 +203,7 @@ function createProductDetailContainer(description) {
 
     const productDetailContainerContent = document.createElement('section');
     productDetailContainerContent.classList.add('product-detail-container-content');
-    const detail = document.createElement('h4');
+    const detail = document.createElement('p');
     detail.innerHTML = description;
     productDetailContainerContent.appendChild(detail);
     productDetailContainer.appendChild(productDetailContainerContent);
