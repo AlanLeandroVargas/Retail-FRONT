@@ -21,7 +21,11 @@ main
             }
             & .product-name
             {
-                grid-column: 2 / 8;
+                grid-column: 2 / 7;
+            }
+            & .product-quantity
+            {
+                grid-column: 7 / 8;
             }
             & .product-price
             {
@@ -31,11 +35,11 @@ main
             {
                 grid-column: 10 / 11;
             }
-            & .product-quantity
+            & .product-price-discounted
             {
                 grid-column: 11 / 12;
-            }
-            & .product-total
+            }            
+            & .product-subtotal
             {
                 grid-column: 12 / 13;
             }
@@ -50,50 +54,75 @@ main
                 display: grid;
                 grid-template-columns: repeat(12, 1fr);
                 box-shadow: 0px 0.5px 0.5px var(--c-cian1);
+                margin-top: 1vh;
                 & p
                 {
                     margin: 1px;
                 }
+                .truncated {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    max-width: 500px; 
+                    display: inline-block;
+                    vertical-align: middle;
+                    cursor: pointer;
+                    &:hover
+                    {                                                 
+                        overflow: visible;
+                    }
+                }
                 & .product-item
-            {                    
-                grid-column: 1 / 2;
-            }
-            & .product-name
-            {
-                grid-column: 2 / 8;
-            }
-            & .product-price
-            {
-                grid-column: 8 / 10;    
-            }
-            & .product-discount
-            {
-                grid-column: 10 / 11;
-            }
-            & .product-quantity
-            {
-                grid-column: 11 / 12;
-            }
-            & .product-total
-            {
-                grid-column: 12 / 13;
-            }
+                {                    
+                    grid-column: 1 / 2;
+                }
+                & .product-name
+                {
+                    grid-column: 2 / 7;
+                }
+                & .product-quantity
+                {
+                    grid-column: 7 / 8;
+                }
+                & .product-price
+                {
+                    grid-column: 8 / 10;    
+                }
+                & .product-discount
+                {
+                    grid-column: 10 / 11;
+                }
+                & .product-price-discounted
+                {
+                    grid-column: 11 / 12;
+                }            
+                & .product-subtotal
+                {
+                    grid-column: 12 / 13;
+                }
                                 
             }                    
         }
         & .sale-detail-bottom
         {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(12, 1fr);
             padding: 10px;
-            & .item-row-bottom
-            {                
-                grid-column: 5 / 7;
-                & p
-                {
-                    margin: 2px;
-                }
+            & .row-name
+            {
+                margin-top: 1vh;
+                grid-column: 1 / 12;
+                width: 100%;
+                box-shadow: 0px 0.5px 0.5px var(--c-cian1);
+            }            
+            & .value
+            {
+                margin-top: 1vh;
+                grid-column: 12 / 13;
+                width: 100%;
+                box-shadow: 0px 0.5px 0.5px var(--c-cian1);
             }
+                    
         }
     }
 }

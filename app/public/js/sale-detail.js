@@ -42,7 +42,6 @@ function renderItemsAmount(productAmount)
         }    
 }
 
-//CHAT CODE ---------------------------------------------------------------------------------------------------------
 
 async function renderItems(saleDetail) {
     let counter = 0;
@@ -67,30 +66,36 @@ async function renderItems(saleDetail) {
 
 function createItemRow(counter, product, productData) {
     const itemRow = document.createElement('section');
+    let discount = product.quantity * (product.price * (product.discount / 100));
+    let subTotal = (product.price * product.quantity) - discount;
     itemRow.classList.add('item-row-content');
     itemRow.innerHTML = `
         <p class="product-item">${counter}</p>
-        <p class="product-name">${productData.name}</p>
+        <p class="product-name truncated">${productData.name}</p>
+        <p class="product-quantity">${product.quantity}</p>
         <p class="product-price">$${formatNumber(product.price)}</p>
         <p class="product-discount">${product.discount}%</p>
-        <p class="product-quantity">${product.quantity}</p>
-        <p class="product-total">$${formatNumber(product.quantity * product.price)}</p>
+        <p class="product-price-discounted">$${formatNumber(discount)}</p>
+        <p class="product-subtotal">$${formatNumber(subTotal)}</p>
     `;
     return itemRow;
 }
 
-//CHAT CODE ---------------------------------------------------------------------------------------------------------
 function renderBottom(saleDetail)
 {
-    const SALE_CONTENT = document.querySelector('.sale-detail-bottom');
-    let itemRow = document.createElement('section');
-    itemRow.classList.add('item-row-bottom')
-    itemRow.innerHTML = `<p>Cantidad Total: ${saleDetail.totalQuantity}</p>
-        <p>Subtotal: $${formatNumber(saleDetail.subTotal)}</p>
-        <p>Descuento Total: $${formatNumber(saleDetail.totalDiscount)}</p>
-        <p>Impuestos: ${Math.round((saleDetail.taxes - 1) * 100)}%</p>
-        <p>Total: $${formatNumber(saleDetail.totalPay)}</p>`
-    SALE_CONTENT.appendChild(itemRow);
+    const saleBottom = document.querySelector('.sale-detail-bottom');
+    saleBottom.innerHTML = `
+        <p class="row-name">Cantidad Total: </p>
+        <p class="value">${saleDetail.totalQuantity}</p>
+        <p class="row-name">Descuento Total: </p>
+        <p class="value">$${formatNumber(saleDetail.totalDiscount)}</p>
+        <p class="row-name">Subtotal: </p>        
+        <p class="value">$${formatNumber(saleDetail.subTotal)}</p>
+        <p class="row-name">Impuestos: </p>
+        <p class="value">${Math.round((saleDetail.taxes - 1) * 100)}%</p>
+        <p class="row-name">Total: </p>
+        <p class="value"><b>$${formatNumber(saleDetail.totalPay)}<b></p>`;
+    saleBottom.appendChild(itemRow);
 }
 //Functionality
 function formatNumber(number) {
