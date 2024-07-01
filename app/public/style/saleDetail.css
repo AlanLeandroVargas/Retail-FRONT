@@ -13,36 +13,37 @@ main
         & .sale-detail-header
         {        
             display: grid;
-            grid-template-columns: repeat(12, 1fr);  
+            grid-template-columns: repeat(12, 90px);  
             padding: 10px;
+            column-gap: 12px;
             & .product-item
-            {                    
-                grid-column: 1 / 2;
-            }
-            & .product-name
-            {
-                grid-column: 2 / 7;
-            }
-            & .product-quantity
-            {
-                grid-column: 7 / 8;
-            }
-            & .product-price
-            {
-                grid-column: 8 / 10;    
-            }
-            & .product-discount
-            {
-                grid-column: 10 / 11;
-            }
-            & .product-price-discounted
-            {
-                grid-column: 11 / 12;
-            }            
-            & .product-subtotal
-            {
-                grid-column: 12 / 13;
-            }
+                {                    
+                    grid-column: 1 / 2;
+                }
+                & .product-name
+                {
+                    grid-column: 2 / 6;
+                }
+                & .product-quantity
+                {
+                    grid-column: 6 / 7;
+                }
+                & .product-price
+                {
+                    grid-column: 7 / 9;    
+                }
+                & .product-discount
+                {
+                    grid-column: 9 / 10;
+                }
+                & .product-price-discounted
+                {
+                    grid-column: 10 / 12;
+                }            
+                & .product-subtotal
+                {
+                    grid-column: 12 / 13;
+                }
         }
         & .sale-detail-content
         {
@@ -52,9 +53,10 @@ main
             & .item-row-content
             {
                 display: grid;
-                grid-template-columns: repeat(12, 1fr);
+                grid-template-columns: repeat(12, 90px);
                 box-shadow: 0px 0.5px 0.5px var(--c-cian1);
                 margin-top: 1vh;
+                column-gap: 12px;
                 & p
                 {
                     margin: 1px;
@@ -78,23 +80,23 @@ main
                 }
                 & .product-name
                 {
-                    grid-column: 2 / 7;
+                    grid-column: 2 / 6;
                 }
                 & .product-quantity
                 {
-                    grid-column: 7 / 8;
+                    grid-column: 6 / 7;
                 }
                 & .product-price
                 {
-                    grid-column: 8 / 10;    
+                    grid-column: 7 / 9;    
                 }
                 & .product-discount
                 {
-                    grid-column: 10 / 11;
+                    grid-column: 9 / 10;
                 }
                 & .product-price-discounted
                 {
-                    grid-column: 11 / 12;
+                    grid-column: 10 / 12;
                 }            
                 & .product-subtotal
                 {
