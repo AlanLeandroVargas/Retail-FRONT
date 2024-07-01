@@ -34,9 +34,6 @@ function renderItemsAmount(productAmount)
 }
 
 function renderSaleCards(sales, from, to) {
-    console.log("Dates");
-    console.log(from);
-    console.log(to);
     createTitle(from, to)
     createSaleContainerHeader()
     sales.forEach(sale => {
@@ -146,9 +143,16 @@ async function searchSales()
     toggleSpinner();
     let from = document.querySelector('#initialDate').value;
     let to = document.querySelector('#finalDate').value;    
-    let sales = await fetchSales(from, to);    
+    let sales = await fetchSales(from, to);
     toggleSpinner();
-    renderSaleCards(sales, from, to);
+    if(sales.length == 0)
+        {
+            noSales();
+        }
+    else
+    {        
+        renderSaleCards(sales, from, to);
+    }
 }
 
 function toggleSearchBox()
@@ -161,4 +165,27 @@ function toggleSaleListSection()
 {
     let saleListSection = document.querySelector('.sale-list-container');
     saleListSection.classList.toggle('sale-list-container-active');
+}
+
+function noSales()
+{
+    const saleSection = document.querySelector('.sales-section');
+    const noSales = document.createElement('section');
+    const main = document.querySelector('main');
+    main.style.height = '50vh';
+    noSales.classList.add('no-sales');
+    noSales.innerHTML = "<p>No se han encontrado ventas dentro de esas fechas</p>";
+    noSales.appendChild(noSalesButton());
+    saleSection.appendChild(noSales);
+}
+
+function noSalesButton()
+{
+    const button = document.createElement('button');
+    button.addEventListener('click', () =>
+        {
+            window.open('/sales', '_self');
+        })
+    button.innerHTML = 'Volver a buscar ventas';
+    return button;
 }
